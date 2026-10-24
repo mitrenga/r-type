@@ -1,0 +1,11 @@
+{
+ "standalone": [
+  "gameWorker.js",
+  "levelScroll.js",
+  "sidPlayer.js",
+  "ship.js",
+  "enemies.js",
+  "levelCode.js",
+  "gameRules.js"
+ ]
+}

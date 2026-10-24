@@ -1,0 +1,9 @@
+<?php
+// copy to config.php; $devMode = true serves app/ directly, without a build
+$devMode = true;
+// the local database of the games played (config/createDB.sql: rg_rt_hallOfFame) — the statistics
+// behind the heading of ABOUT (db/stats.php) and the scores (db/saveGame.php)
+$dbHostname = 'localhost';
+$dbName = 'rtype';
+$dbUser = 'your-user-name';
+$dbPassword = 'your-password';
