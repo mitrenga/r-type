@@ -1,0 +1,599 @@
+{
+ "source": "R-Type, kazeta Electric Dreams (jádro G strany A); tools/dumpglobal.py",
+ "note": "tabulky jádra po úrovních a konstanty s místem v kódu; scroll měří tools/matchlevels.mjs",
+ "tables": [
+  {
+   "addr": "$139A",
+   "length": 16,
+   "kind": "words",
+   "reader": "$161B",
+   "what": "per level: the init routine ($1224, $12A7, $12BB, $134D, $17FA = none)",
+   "values": [
+    "$1224",
+    "$12A7",
+    "$12BB",
+    "$134D",
+    "$17FA",
+    "$17FA",
+    "$17FA",
+    "$17FA"
+   ]
+  },
+  {
+   "addr": "$13AA",
+   "length": 16,
+   "kind": "words",
+   "reader": "$162F",
+   "what": "per level: the map script in G",
+   "values": [
+    "$92D3",
+    "$9274",
+    "$9585",
+    "$912D",
+    "$909E",
+    "$90F7",
+    "$92C7",
+    "$9070"
+   ]
+  },
+  {
+   "addr": "$13BA",
+   "length": 16,
+   "kind": "words",
+   "reader": "$15F0 -> $0E83",
+   "what": "per level: the routine the interrupt chain calls once a frame ($0E82 JSR)",
+   "values": [
+    "$940A",
+    "$943B",
+    "$9586",
+    "$918D",
+    "$17FA",
+    "$9286",
+    "$93B6",
+    "$17FA"
+   ]
+  },
+  {
+   "addr": "$13CA",
+   "length": 8,
+   "kind": "bytes",
+   "reader": "$0958 -> $021E",
+   "what": "per level: $D022 of the playfield after a restart",
+   "values": [
+    15,
+    8,
+    13,
+    15,
+    12,
+    15,
+    15,
+    15
+   ]
+  },
+  {
+   "addr": "$13D2",
+   "length": 8,
+   "kind": "bytes",
+   "reader": "$095E -> $021F",
+   "what": "per level: $D023 of the playfield after a restart",
+   "values": [
+    11,
+    9,
+    5,
+    11,
+    9,
+    11,
+    11,
+    9
+   ]
+  },
+  {
+   "addr": "$13DA",
+   "length": 8,
+   "kind": "bytes",
+   "reader": "$15F0 -> $36A9",
+   "what": "per level: end pointer, low byte",
+   "values": [
+    187,
+    106,
+    0,
+    136,
+    125,
+    70,
+    49,
+    255
+   ]
+  },
+  {
+   "addr": "$13E2",
+   "length": 8,
+   "kind": "bytes",
+   "reader": "$15F0 -> $36AA",
+   "what": "per level: end pointer, high byte (0 = level 3, no end)",
+   "values": [
+    155,
+    155,
+    0,
+    155,
+    155,
+    155,
+    155,
+    154
+   ]
+  },
+  {
+   "addr": "$207C",
+   "length": 16,
+   "kind": "words",
+   "reader": "$15F0 -> $2068",
+   "what": "per level: a hook of $2001 (0 = none)",
+   "values": [
+    "$0000",
+    "$208C",
+    "$0000",
+    "$0000",
+    "$20BC",
+    "$2108",
+    "$2138",
+    "$0000"
+   ]
+  },
+  {
+   "addr": "$0B64",
+   "length": 8,
+   "kind": "bytes",
+   "reader": "$0902, $091F",
+   "what": "per level: the checkpoint — low byte of the map pointer ($9Axx) a death restarts from",
+   "values": [
+    211,
+    198,
+    0,
+    211,
+    255,
+    209,
+    183,
+    39
+   ]
+  },
+  {
+   "addr": "$2F72",
+   "length": 25,
+   "kind": "bytes",
+   "reader": "$1953, $2001",
+   "what": "screen row addresses, low bytes ($CC00 + 40 × row)",
+   "values": [
+    0,
+    40,
+    80,
+    120,
+    160,
+    200,
+    240,
+    24,
+    64,
+    104,
+    144,
+    184,
+    224,
+    8,
+    48,
+    88,
+    128,
+    168,
+    208,
+    248,
+    32,
+    72,
+    112,
+    152,
+    192
+   ]
+  },
+  {
+   "addr": "$2F8B",
+   "length": 25,
+   "kind": "bytes",
+   "reader": "$195B",
+   "what": "screen row addresses, high bytes",
+   "values": [
+    204,
+    204,
+    204,
+    204,
+    204,
+    204,
+    204,
+    205,
+    205,
+    205,
+    205,
+    205,
+    205,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    206,
+    207,
+    207,
+    207,
+    207,
+    207
+   ]
+  },
+  {
+   "addr": "$27F1",
+   "length": 20,
+   "kind": "bytes",
+   "reader": "$27E1 -> $2805",
+   "what": "the game's start state (two players side by side): $2819.. follows",
+   "values": [
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    211,
+    211,
+    39,
+    39,
+    154,
+    154,
+    250,
+    250,
+    23,
+    23,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "addr": "$2819",
+   "length": 8,
+   "kind": "bytes",
+   "reader": "$08C1, $0CD5",
+   "what": "$2819 players? $281D/$281E lives of player 1/2 (3)",
+   "values": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "addr": "$3AE4",
+   "length": 24,
+   "kind": "bytes",
+   "reader": "$3733",
+   "what": "level 3, script A: frames a tick",
+   "values": [
+    6,
+    6,
+    1,
+    6,
+    1,
+    6,
+    2,
+    1,
+    4,
+    10,
+    4,
+    6,
+    2,
+    1,
+    10,
+    6,
+    6,
+    6,
+    8,
+    8,
+    10,
+    6,
+    6,
+    6
+   ]
+  },
+  {
+   "addr": "$3AFC",
+   "length": 24,
+   "kind": "bytes",
+   "reader": "$373C",
+   "what": "level 3, script A: ticks",
+   "values": [
+    40,
+    60,
+    80,
+    48,
+    240,
+    48,
+    180,
+    40,
+    48,
+    50,
+    40,
+    160,
+    200,
+    100,
+    80,
+    80,
+    80,
+    80,
+    50,
+    40,
+    40,
+    160,
+    48,
+    40
+   ]
+  },
+  {
+   "addr": "$3B14",
+   "length": 24,
+   "kind": "bytes",
+   "reader": "$3742",
+   "what": "level 3, script A: direction (0 left, 1 right, $80 still)",
+   "values": [
+    1,
+    1,
+    128,
+    1,
+    128,
+    1,
+    128,
+    128,
+    1,
+    1,
+    1,
+    1,
+    128,
+    128,
+    128,
+    1,
+    1,
+    1,
+    1,
+    0,
+    0,
+    0,
+    128,
+    128
+   ]
+  },
+  {
+   "addr": "$3B2C",
+   "length": 24,
+   "kind": "bytes",
+   "reader": "$37B1",
+   "what": "level 3, script B: frames a tick",
+   "values": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    1,
+    16,
+    20,
+    20,
+    6,
+    9,
+    1,
+    8,
+    6,
+    24,
+    12,
+    8,
+    8,
+    8,
+    24,
+    6,
+    6
+   ]
+  },
+  {
+   "addr": "$3B44",
+   "length": 24,
+   "kind": "bytes",
+   "reader": "$37BA",
+   "what": "level 3, script B: ticks",
+   "values": [
+    30,
+    45,
+    10,
+    36,
+    30,
+    36,
+    45,
+    40,
+    12,
+    25,
+    8,
+    160,
+    50,
+    100,
+    100,
+    80,
+    20,
+    40,
+    50,
+    40,
+    50,
+    40,
+    48,
+    40
+   ]
+  },
+  {
+   "addr": "$3B5C",
+   "length": 24,
+   "kind": "bytes",
+   "reader": "$37C0",
+   "what": "level 3, script B: direction (0 up, 1 down, $80 still)",
+   "values": [
+    0,
+    1,
+    0,
+    0,
+    1,
+    1,
+    1,
+    128,
+    0,
+    0,
+    0,
+    128,
+    1,
+    128,
+    0,
+    1,
+    0,
+    0,
+    128,
+    0,
+    0,
+    1,
+    1,
+    0
+   ]
+  },
+  {
+   "addr": "$36A7",
+   "length": 4,
+   "kind": "bytes",
+   "reader": "$34FB, $3658",
+   "what": "$36A7 rows of the new column (19), $36A8 the frame counter of the scroll, $36A9/$36AA the end pointer",
+   "values": [
+    19,
+    2,
+    0,
+    0
+   ]
+  },
+  {
+   "addr": "$3AD6",
+   "length": 14,
+   "kind": "bytes",
+   "reader": "$3702",
+   "what": "level 3 state as the core carries it: $3AD6 column tick (16), $3AD7 phase, $3AD8 B index, $3AD9 redraw, $3ADA/B window, $3ADC-$3ADF A, $3AE0-$3AE3 B",
+   "values": [
+    16,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    1,
+    0,
+    1,
+    1,
+    1,
+    0
+   ]
+  }
+ ],
+ "constants": {
+  "mapStart": {
+   "value": 39463,
+   "where": "$1544: the map pointer at the start (column 39)"
+  },
+  "fineScrollStart": {
+   "value": 7,
+   "where": "$1591: $020C"
+  },
+  "d011": {
+   "value": 27,
+   "where": "$1596: $020B, the $D011 of the bottom border ($0F52)"
+  },
+  "scrollRunning": {
+   "value": 1,
+   "where": "$15C6: $0221"
+  },
+  "scrollFrames": {
+   "value": 2,
+   "where": "$3503: frames per fine step ($36A8 reload) — 1 px every 2 frames"
+  },
+  "columnFrames": {
+   "value": 16,
+   "where": "8 fine steps a column"
+  },
+  "newColumn": {
+   "value": 38,
+   "where": "$366D: the column drawn from the map ($CC26)"
+  },
+  "bands": {
+   "value": [
+    79,
+    100,
+    103,
+    119,
+    140,
+    143
+   ],
+   "where": "$156A: rasters $023A-$023F of the multiplexer bands"
+  },
+  "panelRaster": {
+   "value": 202,
+   "where": "$1151: the raster of the panel interrupt ($0DE6); level 3 $C6 ($12C5)"
+  },
+  "playfieldTop": {
+   "value": 48,
+   "where": "$0D04: raster 48"
+  },
+  "lowerSetRaster": {
+   "value": 140,
+   "where": "$023E -> $10B6: from raster 140 the lower set ($D018 $39)"
+  },
+  "d018": {
+   "value": {
+    "upper": 48,
+    "lower": 56,
+    "panel": 50
+   },
+   "where": "$0D17, $10B6 (.. $39), $0E1A"
+  },
+  "d016": {
+   "value": {
+    "playfield": "$020C | $10",
+    "panel": 24
+   },
+   "where": "$0D07, $0E1F"
+  },
+  "colors": {
+   "value": {
+    "d020": 0,
+    "d021": 0,
+    "panelD022": 15,
+    "panelD023": 11
+   },
+   "where": "$13EA, $0D1F, $0E0D-$0E17"
+  },
+  "lives": {
+   "value": 3,
+   "where": "$281D/$281E"
+  },
+  "vertical": {
+   "value": {
+    "phases": 25,
+    "columnTick": 16,
+    "windowStart": 40507,
+    "windowOffset": 217,
+    "stride": 130,
+    "color": 9
+   },
+   "where": "$370A, $3724, $1343, $384D, $3853"
+  }
+ }
+}
