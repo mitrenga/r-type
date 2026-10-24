@@ -6,6 +6,9 @@
   "ship.js",
   "enemies.js",
   "levelCode.js",
-  "gameRules.js"
+  "gameRules.js",
+  "svision/js/audio/worker/chipProcessor.js",
+  "svision/js/audio/chip/chipStream.js",
+  "svision/js/audio/chip/sid.js"
  ]
 }
