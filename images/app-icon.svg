@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+<title id="title">R-TYPE — Cold Steel</title>
+<desc id="desc">Angular R-9 inspired fighter and incandescent plasma shot on midnight blue. Editable vector master with separate background and foreground groups. C64-inspired restrained colors and stepped forms.</desc><defs>
+  <radialGradient id="space" cx="60%" cy="42%" r="76%"><stop stop-color="#19233d"/><stop offset=".55" stop-color="#0b1020"/><stop offset="1" stop-color="#04060c"/></radialGradient>
+  <radialGradient id="aura"><stop stop-color="#ff7438" stop-opacity=".26"/><stop offset=".45" stop-color="#c94327" stop-opacity=".12"/><stop offset="1" stop-color="#c94327" stop-opacity="0"/></radialGradient>
+  <linearGradient id="steel" x1="0" y1="0" x2=".25" y2="1"><stop stop-color="#e1e5e9"/><stop offset=".48" stop-color="#9eafc3"/><stop offset=".49" stop-color="#657790"/><stop offset="1" stop-color="#344159"/></linearGradient>
+  <linearGradient id="wing" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a9b8cb"/><stop offset="1" stop-color="#34435d"/></linearGradient>
+  <linearGradient id="glass" x1="0" y1="0" x2=".4" y2="1"><stop stop-color="#c1f8ff"/><stop offset=".35" stop-color="#69c8df"/><stop offset="1" stop-color="#235177"/></linearGradient>
+  <linearGradient id="exhaust"><stop stop-color="#70c4f3" stop-opacity="0"/><stop offset="1" stop-color="#9be8ff" stop-opacity=".85"/></linearGradient>
+  <radialGradient id="plasma" cx="42%" cy="42%"><stop stop-color="#ffffe2"/><stop offset=".35" stop-color="#ffe8a1"/><stop offset=".7" stop-color="#ffad51"/><stop offset="1" stop-color="#e94c2e"/></radialGradient>
+</defs><g id="background"><rect width="1024" height="1024" fill="url(#space)"/>
+<!-- Sparse, stepped blue structures suggest an 8-bit mechanical environment. -->
+<path d="M0 268H160V236H320 M0 800H176V768H288 M1024 204H884V236H804 M1024 728H906V760H826" fill="none" stroke="#364362" stroke-width="4" opacity=".23"/>
+<path d="M54 712L828 226 M202 852L958 378" stroke="#526b91" stroke-width="2" opacity=".08"/>
+<path d="M164 304h6v6h-6z M824 700h6v6h-6z M354 176h4v4h-4z M704 832h4v4h-4z" fill="#6e819f" opacity=".45"/>
+</g><g id="icon-composition" transform="translate(512 512) scale(1.18) translate(-512 -512)"><g id="foreground">
+<g id="fighter-and-plasma" transform="rotate(-24 512 512)">
+<ellipse id="plasma-aura" cx="765" cy="512" rx="165" ry="106" fill="url(#aura)"/>
+<g id="engine-trail"><path d="M96 490L294 485V540L96 532L148 512Z" fill="url(#exhaust)"/><path d="M162 509H292V519H162Z" fill="#baefff" opacity=".65"/></g>
+<!-- R-9 inspired stepped silhouette; all surfaces remain editable paths. -->
+<g id="rear-wings" stroke="#080e1b" stroke-width="7" stroke-linejoin="miter">
+<path d="M324 484L304 352L352 340L450 472Z" fill="url(#wing)"/>
+<path d="M328 536L300 670L348 658L460 542Z" fill="url(#wing)"/>
+</g>
+<path d="M309 359L348 349L367 375L315 389Z M307 639L365 620L344 649L303 660Z" fill="#a64e53"/>
+<path d="M321 400L337 468L365 462Z M326 588L320 624L376 604L410 565Z" fill="#26334c"/>
+<g id="engine"><path d="M266 476L324 461L354 483V546L319 563L266 546Z" fill="#26354c" stroke="#080e1b" stroke-width="8"/><path d="M270 490L290 486V536L270 532Z" fill="#a1e8f3"/><path d="M302 482L322 477V548L302 553Z" fill="#101b2c"/></g>
+<g id="hull">
+<path d="M309 477L410 437L506 444L566 474L646 487L681 511L642 538L548 548L476 581L386 565L309 541Z" fill="url(#steel)" stroke="#080e1b" stroke-width="8" stroke-linejoin="miter"/>
+<path d="M315 482L412 444L502 452L535 471L405 467L354 494Z" fill="#d3dce5"/>
+<path d="M354 519L465 505L644 502L666 512L634 524L484 532L401 550Z" fill="#d1dbe4"/>
+<path d="M405 548L484 532L633 525L607 539L539 542L473 574Z" fill="#42536e"/>
+<path d="M332 527L399 542L450 530L500 531L476 549L401 561L332 540Z" fill="#a34e55"/>
+<path d="M355 482L387 469L406 477L380 502L349 508Z" fill="#35445c"/>
+<path d="M414 495L439 462L486 457L535 481L503 496Z" fill="url(#glass)" stroke="#15243a" stroke-width="7"/>
+<path d="M432 482L446 467L482 465L505 476Z" fill="#c8f6f8" opacity=".75"/>
+<path d="M548 486L601 493L572 499L536 498Z" fill="#f3e5cd"/>
+<path d="M628 505L694 509V517L628 522Z" fill="#c1ccd6"/>
+</g>
+<g id="plasma-shot">
+<!-- Ragged trailing tongues and a compressed leading edge; no solid casing. -->
+<path d="M688 480L748 491L725 469Q781 474 808 490Q833 500 834 512Q831 531 800 539L746 550L760 534L698 540L729 523L681 515L725 504Z" fill="#d54b2f" opacity=".8"/>
+<path d="M704 490L762 500L748 483Q792 486 813 502Q828 511 817 522Q798 535 755 538L769 527L720 532L748 518L700 512L751 508Z" fill="#ff913f"/>
+<path d="M723 503L776 505L765 495Q802 498 817 511Q812 525 779 529L789 520L746 525L764 515Z" fill="#ffdc7b"/>
+<path d="M753 509L787 509L780 504Q803 506 812 513Q802 521 783 520L790 515L759 517Z" fill="#ffffe8"/>
+<path d="M687 495L711 500 M711 543L733 538 M752 476L771 481" fill="none" stroke="#ff8845" stroke-width="3" opacity=".65"/>
+</g>
+</g></g></g></svg>
