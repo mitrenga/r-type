@@ -198,6 +198,43 @@ def image(level=None, core=None, side_b=None):
     return m
 
 
+def strip_notes(out, drop=(), source=False):
+    """Removes the annotations from a dump before it is written: the
+    top-level `source` and `note` (unless `source` is kept — mkscreen.py's
+    frames carry the level in it for matchcompose.mjs) and the keys in `drop`
+    wherever they hold prose only (a string, a list of strings or a dict of
+    them). Addresses the game reads (`addr`, `screen`, …) are not prose-only
+    keys in `drop`, so they stay. The game loads the files into localStorage
+    and reads none of the notes (operator 2026-10-25)."""
+    def prose(v):
+        if isinstance(v, str):
+            return True
+        if isinstance(v, list):
+            return bool(v) and all(isinstance(x, str) for x in v)
+        if isinstance(v, dict):
+            return bool(v) and all(prose(x) for x in v.values())
+        return False
+    def walk(o, top):
+        if isinstance(o, dict):
+            for k in list(o):
+                if (top and (k == 'note' or (k == 'source' and not source))) or (k in drop and prose(o[k])):
+                    del o[k]
+                else:
+                    walk(o[k], False)
+        elif isinstance(o, list):
+            for v in o:
+                walk(v, False)
+    walk(out, True)
+    return out
+
+
+def save_json(out, path, drop=(), source=False, **kw):
+    """json.dump of a dump without its annotations (`strip_notes`); the
+    caller's `out` is left whole — the tools print their summary from it."""
+    import copy, json
+    json.dump(strip_notes(copy.deepcopy(out), drop, source), open(path, 'w'), **kw)
+
+
 def word(m, a):
     return m[a] | m[a + 1] << 8
 

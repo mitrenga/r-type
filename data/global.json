@@ -1,12 +1,9 @@
 {
- "source": "R-Type, kazeta Electric Dreams (jádro G strany A); tools/dumpglobal.py",
- "note": "tabulky jádra po úrovních a konstanty s místem v kódu; scroll měří tools/matchlevels.mjs",
  "tables": [
   {
    "addr": "$139A",
    "length": 16,
    "kind": "words",
-   "reader": "$161B",
    "what": "per level: the init routine ($1224, $12A7, $12BB, $134D, $17FA = none)",
    "values": [
     "$1224",
@@ -23,7 +20,6 @@
    "addr": "$13AA",
    "length": 16,
    "kind": "words",
-   "reader": "$162F",
    "what": "per level: the map script in G",
    "values": [
     "$92D3",
@@ -40,7 +36,6 @@
    "addr": "$13BA",
    "length": 16,
    "kind": "words",
-   "reader": "$15F0 -> $0E83",
    "what": "per level: the routine the interrupt chain calls once a frame ($0E82 JSR)",
    "values": [
     "$940A",
@@ -57,7 +52,6 @@
    "addr": "$13CA",
    "length": 8,
    "kind": "bytes",
-   "reader": "$0958 -> $021E",
    "what": "per level: $D022 of the playfield after a restart",
    "values": [
     15,
@@ -74,7 +68,6 @@
    "addr": "$13D2",
    "length": 8,
    "kind": "bytes",
-   "reader": "$095E -> $021F",
    "what": "per level: $D023 of the playfield after a restart",
    "values": [
     11,
@@ -91,7 +84,6 @@
    "addr": "$13DA",
    "length": 8,
    "kind": "bytes",
-   "reader": "$15F0 -> $36A9",
    "what": "per level: end pointer, low byte",
    "values": [
     187,
@@ -108,7 +100,6 @@
    "addr": "$13E2",
    "length": 8,
    "kind": "bytes",
-   "reader": "$15F0 -> $36AA",
    "what": "per level: end pointer, high byte (0 = level 3, no end)",
    "values": [
     155,
@@ -125,7 +116,6 @@
    "addr": "$207C",
    "length": 16,
    "kind": "words",
-   "reader": "$15F0 -> $2068",
    "what": "per level: a hook of $2001 (0 = none)",
    "values": [
     "$0000",
@@ -142,7 +132,6 @@
    "addr": "$0B64",
    "length": 8,
    "kind": "bytes",
-   "reader": "$0902, $091F",
    "what": "per level: the checkpoint — low byte of the map pointer ($9Axx) a death restarts from",
    "values": [
     211,
@@ -159,7 +148,6 @@
    "addr": "$2F72",
    "length": 25,
    "kind": "bytes",
-   "reader": "$1953, $2001",
    "what": "screen row addresses, low bytes ($CC00 + 40 × row)",
    "values": [
     0,
@@ -193,7 +181,6 @@
    "addr": "$2F8B",
    "length": 25,
    "kind": "bytes",
-   "reader": "$195B",
    "what": "screen row addresses, high bytes",
    "values": [
     204,
@@ -227,7 +214,6 @@
    "addr": "$27F1",
    "length": 20,
    "kind": "bytes",
-   "reader": "$27E1 -> $2805",
    "what": "the game's start state (two players side by side): $2819.. follows",
    "values": [
     0,
@@ -256,7 +242,6 @@
    "addr": "$2819",
    "length": 8,
    "kind": "bytes",
-   "reader": "$08C1, $0CD5",
    "what": "$2819 players? $281D/$281E lives of player 1/2 (3)",
    "values": [
     0,
@@ -273,7 +258,6 @@
    "addr": "$3AE4",
    "length": 24,
    "kind": "bytes",
-   "reader": "$3733",
    "what": "level 3, script A: frames a tick",
    "values": [
     6,
@@ -306,7 +290,6 @@
    "addr": "$3AFC",
    "length": 24,
    "kind": "bytes",
-   "reader": "$373C",
    "what": "level 3, script A: ticks",
    "values": [
     40,
@@ -339,7 +322,6 @@
    "addr": "$3B14",
    "length": 24,
    "kind": "bytes",
-   "reader": "$3742",
    "what": "level 3, script A: direction (0 left, 1 right, $80 still)",
    "values": [
     1,
@@ -372,7 +354,6 @@
    "addr": "$3B2C",
    "length": 24,
    "kind": "bytes",
-   "reader": "$37B1",
    "what": "level 3, script B: frames a tick",
    "values": [
     8,
@@ -405,7 +386,6 @@
    "addr": "$3B44",
    "length": 24,
    "kind": "bytes",
-   "reader": "$37BA",
    "what": "level 3, script B: ticks",
    "values": [
     30,
@@ -438,7 +418,6 @@
    "addr": "$3B5C",
    "length": 24,
    "kind": "bytes",
-   "reader": "$37C0",
    "what": "level 3, script B: direction (0 up, 1 down, $80 still)",
    "values": [
     0,
@@ -471,7 +450,6 @@
    "addr": "$36A7",
    "length": 4,
    "kind": "bytes",
-   "reader": "$34FB, $3658",
    "what": "$36A7 rows of the new column (19), $36A8 the frame counter of the scroll, $36A9/$36AA the end pointer",
    "values": [
     19,
@@ -484,7 +462,6 @@
    "addr": "$3AD6",
    "length": 14,
    "kind": "bytes",
-   "reader": "$3702",
    "what": "level 3 state as the core carries it: $3AD6 column tick (16), $3AD7 phase, $3AD8 B index, $3AD9 redraw, $3ADA/B window, $3ADC-$3ADF A, $3AE0-$3AE3 B",
    "values": [
     16,
@@ -566,7 +543,6 @@
   },
   "d016": {
    "value": {
-    "playfield": "$020C | $10",
     "panel": 24
    },
    "where": "$0D07, $0E1F"

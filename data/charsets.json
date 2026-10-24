@@ -1,29 +1,23 @@
 {
-"source": "R-Type, kazeta Electric Dreams; tools/dumpcharset.py (obraz paměti z kazety, kopie jako $1794/$11FA)",
-"note": "tři sady v pásmech: horní plocha $C000 ($D018 $30), dolní plocha od rastru 140 $E000 ($38), panel od 202 $C800 ($32)",
 "runtime": [
 {
 "glyphs": "$AF-$BF",
 "sets": [
 "upper",
 "lower"
-],
-"who": "$1254 maže (136 B na $8C24 a $E578), $127E (úroveň 1) a $1385 (úroveň 4) sázejí bity, $940A/$945C (kód úrovně 1 v G, čte $DC04) hýbe hvězdami každý snímek"
+]
 },
 {
 "glyphs": "$FC-$FF",
 "sets": [
 "panel"
-],
-"who": "$CBE1-$CBFF leží za koncem souboru M strany A ($A134): obsah RAM, ne data"
+]
 }
 ],
 "panel": {
 "addr": "$C800",
-"source": "$9D53 (M strany A, $17D3)",
 "glyphs": 256,
 "nonEmpty": 122,
-"fileEnd": "$A134",
 "bytes": [
 0,
 0,
@@ -1053,7 +1047,6 @@
 },
 "shared": {
 "addr": "$C600",
-"source": "$8C53 (M strany A, $17D3)",
 "glyphs": 64,
 "codes": "$C0-$FF",
 "nonEmpty": 63,
@@ -1579,7 +1572,6 @@
 "init": "$1224: $1254 clears glyphs $AF-$BF of both sets, $127E/$1292 seed six bits each",
 "upper": {
 "addr": "$C000",
-"source": "$86AC (G) + $8C53 (M strany A)",
 "glyphs": 256,
 "nonEmpty": 243,
 "bytes": [
@@ -3635,7 +3627,6 @@
 },
 "lower": {
 "addr": "$E000",
-"source": "$E000 (S)",
 "glyphs": 256,
 "nonEmpty": 243,
 "bytes": [
@@ -5696,7 +5687,6 @@
 "init": null,
 "upper": {
 "addr": "$C000",
-"source": "$86AC (G) + $8C53 (M strany A)",
 "glyphs": 256,
 "nonEmpty": 254,
 "bytes": [
@@ -7752,7 +7742,6 @@
 },
 "lower": {
 "addr": "$E000",
-"source": "$E000 (S)",
 "glyphs": 256,
 "nonEmpty": 242,
 "bytes": [
@@ -9813,7 +9802,6 @@
 "init": null,
 "upper": {
 "addr": "$C000",
-"source": "$86AC (G) + $8C53 (M strany A)",
 "glyphs": 256,
 "nonEmpty": 252,
 "bytes": [
@@ -11869,7 +11857,6 @@
 },
 "lower": {
 "addr": "$E000",
-"source": "$E000 (S)",
 "glyphs": 256,
 "nonEmpty": 244,
 "bytes": [
@@ -13930,7 +13917,6 @@
 "init": "$134D: $136E clears glyphs $B3-$BF of the upper set, $1385 seeds six bits",
 "upper": {
 "addr": "$C000",
-"source": "$86AC (G) + $8C53 (M strany A)",
 "glyphs": 256,
 "nonEmpty": 247,
 "bytes": [
@@ -15986,7 +15972,6 @@
 },
 "lower": {
 "addr": "$E000",
-"source": "$E000 (S)",
 "glyphs": 256,
 "nonEmpty": 245,
 "bytes": [
@@ -18047,7 +18032,6 @@
 "init": null,
 "upper": {
 "addr": "$C000",
-"source": "$86AC (G) + $8C53 (M strany A)",
 "glyphs": 256,
 "nonEmpty": 248,
 "bytes": [
@@ -20103,7 +20087,6 @@
 },
 "lower": {
 "addr": "$E000",
-"source": "$E000 (S)",
 "glyphs": 256,
 "nonEmpty": 248,
 "bytes": [
@@ -22164,7 +22147,6 @@
 "init": null,
 "upper": {
 "addr": "$C000",
-"source": "$86AC (G) + $8C53 (M strany A)",
 "glyphs": 256,
 "nonEmpty": 205,
 "bytes": [
@@ -24220,7 +24202,6 @@
 },
 "lower": {
 "addr": "$E000",
-"source": "$E000 (S)",
 "glyphs": 256,
 "nonEmpty": 160,
 "bytes": [
@@ -26281,7 +26262,6 @@
 "init": null,
 "upper": {
 "addr": "$C000",
-"source": "$86AC (G) + $8C53 (M strany A)",
 "glyphs": 256,
 "nonEmpty": 254,
 "bytes": [
@@ -28337,7 +28317,6 @@
 },
 "lower": {
 "addr": "$E000",
-"source": "$E000 (S)",
 "glyphs": 256,
 "nonEmpty": 246,
 "bytes": [
@@ -30398,7 +30377,6 @@
 "init": null,
 "upper": {
 "addr": "$C000",
-"source": "$86AC (G) + $8C53 (M strany A)",
 "glyphs": 256,
 "nonEmpty": 230,
 "bytes": [
@@ -32454,7 +32432,6 @@
 },
 "lower": {
 "addr": "$E000",
-"source": "$E000 (S)",
 "glyphs": 256,
 "nonEmpty": 250,
 "bytes": [

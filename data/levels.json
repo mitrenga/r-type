@@ -1,13 +1,9 @@
 {
- "source": "R-Type, kazeta Electric Dreams (strana B, soubory M/G/S každé úrovně; tabulky z jádra G strany A); tools/dumplevels.py",
- "note": "mapa 19 × 512 na $9A00 se nestaví tady — staví ji rutina $162F z bloků a skriptu (app/levelScroll.js), měří tools/matchlevels.mjs proti paměti originálu",
  "map": {
   "base": "$9A00",
   "rows": 19,
   "stride": 512,
   "start": "$9A27",
-  "unpacker": "$162F",
-  "blockTable": "$8E6C/$8ECF",
   "firstScreen": "$11A2",
   "scroll": {
    "step": "$34FB",
@@ -19,20 +15,8 @@
    "shift": "$3519",
    "column": "$3641",
    "screenColumn": 38,
-   "colorTable": "$8CAC",
-   "flagTable": "$8D6C"
+   "colorTable": "$8CAC"
   }
- },
- "tables": {
-  "init": "$139A",
-  "script": "$13AA",
-  "irqHook": "$13BA",
-  "bg1": "$13CA",
-  "bg2": "$13D2",
-  "endLo": "$13DA",
-  "endHi": "$13E2",
-  "hook207C": "$207C",
-  "checkpoint": "$0B64"
  },
  "levels": [
   {
@@ -67,10 +51,6 @@
    "end": "$9BBB",
    "columns": 404,
    "initPatches": {
-    "clears": [
-     "$FD40-$FF3F",
-     "glyphs $AF-$BF of both sets ($8C24, $E578)"
-    ],
     "starSeeds": [
      35900,
      35934,
@@ -87,9 +67,7 @@
      58797,
      58815
     ],
-    "starTables": "$94C4->$94CA, $94B8->$94BE (6 B each, in G)",
-    "then": "JMP $9531 (G: animation)",
-    "unless": "pointer past the checkpoint $9AD3 ($125F)"
+    "then": "JMP $9531 (G: animation)"
    },
    "charColors": [
     0,
@@ -2364,11 +2342,6 @@
    "checkpoint": 198,
    "end": "$9B6A",
    "columns": 323,
-   "initPatches": {
-    "clears": [
-     "$134C <- 0"
-    ]
-   },
    "charColors": [
     15,
     1,
@@ -2888,8 +2861,6 @@
    "colorSwitch": {
     "pointer": "$9B4A",
     "reg64": 56,
-    "who": "$943B (raster 202, after the step): DEC $95D4, at zero the glyph animation ($947A, reload 3), else at $0201/$0202 = $9B4A the column colours come from $937B, $64 <- $38 (the lower set on top), $0B5E <- 0, music $6379",
-    "tableAddr": "$937B",
     "counter": {
      "addr": "$95D4",
      "initial": 3,
@@ -4680,9 +4651,6 @@
    "columns": null,
    "initPatches": {
     "vertical": true,
-    "clears": [
-     "$9A00-$B3FF (26 pages) unless $134C"
-    ],
     "then": "$1321: $3AD7-$3AD9 <- 0, $3ADC-$3ADE, $3AE0-$3AE2 <- 1, $3ADA/$3ADB <- $9E3B; JMP $394A"
    },
    "charColors": [
@@ -5202,7 +5170,6 @@
     0
    ],
    "vertical": {
-    "mapSrc": "$8E6C",
     "rows": 23,
     "cols": 79,
     "dst": "$9EBA",
@@ -7285,9 +7252,6 @@
    "end": "$9B88",
    "columns": 353,
    "initPatches": {
-    "clears": [
-     "$8C44-$8CAB (glyphs $B3-$BF of the upper set)"
-    ],
     "starSeeds": [
      35932,
      35966,
@@ -7295,8 +7259,7 @@
      35944,
      35961,
      35979
-    ],
-    "starTables": "$91E1->$91E7, $91D5->$91DB (6 B each, in G)"
+    ]
    },
    "charColors": [
     9,

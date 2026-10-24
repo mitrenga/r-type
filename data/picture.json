@@ -1,6 +1,4 @@
 {
- "source": "R-Type, kazeta Electric Dreams, strana A, soubor P ($7000-$985E); tools/dumppicture.py",
- "note": "nahrávací obrázek: multicolour bitmapa 160 x 200 párů; 00 = $D021, 01 = horní nibble Screen RAM, 10 = dolní nibble, 11 = Color RAM",
  "file": {
   "name": "P",
   "addr": "$7000",
@@ -10,7 +8,6 @@
  "height": 200,
  "bitmap": {
   "addr": "$7000",
-  "shown": "$E000",
   "bytes": [
    4,
    17,
@@ -8016,7 +8013,6 @@
  },
  "screen": {
   "addr": "$9000",
-  "shown": "$CC00",
   "bytes": [
    110,
    110,
@@ -9022,7 +9018,6 @@
  },
  "color": {
   "addr": "$93E8",
-  "shown": "$D800",
   "bytes": [
    247,
    55,

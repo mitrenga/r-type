@@ -1,50 +1,8 @@
 {
- "source": "R-Type, kazeta Electric Dreams (jádro G, M strany A); tools/dumptexts.py",
- "note": "kódy znaků sady panelu ($C800); abeceda a-z = $57-$70, 0-9 = $71-$7A, mezera 0 — odečtená z $5F0D",
- "alphabet": {
-  "$00": " ",
-  "$57": "a",
-  "$58": "b",
-  "$59": "c",
-  "$5A": "d",
-  "$5B": "e",
-  "$5C": "f",
-  "$5D": "g",
-  "$5E": "h",
-  "$5F": "i",
-  "$60": "j",
-  "$61": "k",
-  "$62": "l",
-  "$63": "m",
-  "$64": "n",
-  "$65": "o",
-  "$66": "p",
-  "$67": "q",
-  "$68": "r",
-  "$69": "s",
-  "$6A": "t",
-  "$6B": "u",
-  "$6C": "v",
-  "$6D": "w",
-  "$6E": "x",
-  "$6F": "y",
-  "$70": "z",
-  "$71": "0",
-  "$72": "1",
-  "$73": "2",
-  "$74": "3",
-  "$75": "4",
-  "$76": "5",
-  "$77": "6",
-  "$78": "7",
-  "$79": "8",
-  "$7A": "9"
- },
  "panel": {
   "addr": "$8B73",
   "length": 224,
   "screen": "$CF08-$CFE7",
-  "printer": "$17BF",
   "codes": [
    0,
    0,
@@ -274,7 +232,6 @@
   "colors": {
    "addr": "$5F61",
    "length": 91,
-   "reader": "$17C6",
    "values": [
     9,
     73,
@@ -373,31 +330,26 @@
    {
     "addr": "$CF58",
     "count": 22,
-    "value": 26,
-    "who": "$15D0: the BEAM meter, 22 cells of $1A (row 21 from column 16)"
+    "value": 26
    },
    {
     "addr": "$CF49",
     "count": 8,
-    "value": 0,
-    "who": "$0CD5: the lives, cleared"
+    "value": 0
    },
    {
     "addr": "$CF49",
     "count": "lives & 7",
     "value": 31,
-    "color": 9,
-    "who": "$0CD5 from the main loop with $281D (3 at the start, $2819 table): one $1F a life, colour 9"
+    "color": 9
    }
-  ],
-  "later": "$32CD/$33A5 print the score and the high score into rows 22-23 on the first frame ($0E4E) — M5"
+  ]
  },
  "blocks": {
   "ready1": {
    "addr": "$0C5B",
    "width": 14,
    "rows": 2,
-   "printer": "$0B8B",
    "screen": "$CD25/$CD4D",
    "codes": [
     [
@@ -442,7 +394,6 @@
    "addr": "$0C77",
    "width": 26,
    "rows": 2,
-   "printer": "$0B9E",
    "screen": "$CD1F/$CD47",
    "codes": [
     [
@@ -511,7 +462,6 @@
    "addr": "$0CAB",
    "width": 17,
    "rows": 2,
-   "printer": "$0BB1",
    "screen": "$CD21/$CD49",
    "codes": [
     [
@@ -562,7 +512,6 @@
    "addr": "$0CCD",
    "width": 2,
    "rows": 2,
-   "printer": "$0BC7",
    "screen": "$CD35/$CD5D",
    "codes": [
     [
@@ -583,7 +532,6 @@
    "addr": "$0CD1",
    "width": 2,
    "rows": 2,
-   "printer": "$0BDA",
    "screen": "$CD35/$CD5D",
    "codes": [
     [
@@ -604,7 +552,6 @@
    "addr": "$5F0D",
    "width": 18,
    "rows": 1,
-   "printer": "$5E47",
    "screen": "$CC33",
    "codes": [
     [
@@ -636,7 +583,6 @@
    "addr": "$5F1F",
    "width": 12,
    "rows": 1,
-   "printer": "$5E47",
    "screen": "$CC86",
    "codes": [
     [
@@ -662,7 +608,6 @@
    "addr": "$5F2B",
    "width": 12,
    "rows": 1,
-   "printer": "$5E47",
    "screen": "$CCD6",
    "codes": [
     [
@@ -688,7 +633,6 @@
    "addr": "$5F37",
    "width": 12,
    "rows": 1,
-   "printer": "$5E47",
    "screen": "$CD26",
    "codes": [
     [
@@ -714,7 +658,6 @@
    "addr": "$5F43",
    "width": 12,
    "rows": 1,
-   "printer": "$5E47",
    "screen": "$CD76",
    "codes": [
     [

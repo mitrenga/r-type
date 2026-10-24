@@ -1,12 +1,9 @@
 {
- "source": "R-Type, kazeta Electric Dreams (jádro G strany A); tools/dumpship.py",
- "note": "tabulky a počáteční hodnoty proměnných kódu lodi na adresách originálu; čte je app/ship.js, měří tools/matchship.mjs",
  "regions": [
   {
    "name": "mainState",
    "addr": "$0B5D",
    "length": 7,
-   "reader": "$08C1, $0E75, $32B6",
    "what": "$0B5D state of the main loop (0 game, 1/2 life lost), $0B5E music, $0B5F re-entry guard of $0DE6, $0B60/$0B61 counters of the level end, $0B62 temp, $0B63 READY countdown",
    "bytes": [
     0,
@@ -22,7 +19,6 @@
    "name": "checkpoints",
    "addr": "$0B64",
    "length": 8,
-   "reader": "$0902, $091F",
    "what": "by level: the low byte of the map pointer of the one checkpoint (page $9A); a death past it restarts there with the wave table of $7AD4",
    "bytes": [
     211,
@@ -39,7 +35,6 @@
    "name": "readyTexts",
    "addr": "$0C5B",
    "length": 122,
-   "reader": "$0B6C",
    "what": "the screen codes (set $C800) of the READY screen: $0C5B/$0C69 two rows of 14 (A = 0, a life lost), $0C77/$0C91 two rows of 26 (A = $80, GAME OVER), $0CAB/$0CBC two rows of 17 and $0CCD/$0CCF, $0CD1/$0CD3 the 1UP/2UP tails (A = 1, the start of a level)",
    "bytes": [
     36,
@@ -170,7 +165,6 @@
    "name": "tapeEndTexts",
    "addr": "$5F0D",
    "length": 84,
-   "reader": "$5E95, $5EEE",
    "what": "after GAME OVER: 18 at $CC33 (PLEASE REWIND TAPE), 12 at $CC86, $CCD6 (THEN PRESS / F1 TO START), two rows of 12 loaded and never stored ($5EB6-$5EBF: OR / F3 2 PLAYER), 18 at $CCFB (PRESS PLAY ON TAPE)",
    "bytes": [
     102,
@@ -263,7 +257,6 @@
    "name": "blink",
    "addr": "$1190",
    "length": 2,
-   "reader": "$116C, $319C",
    "what": "$1190 0 = invulnerable and blinking, $80 = vulnerable; $1191 frames left ($78)",
    "bytes": [
     0,
@@ -274,7 +267,6 @@
    "name": "gameState",
    "addr": "$2805",
    "length": 28,
-   "reader": "$27E1, $26E5, $321A",
    "what": "$2805-$2818 the two players' saved ship state, $2819 player, $281A/$281B ?, $281C deaths, $281D/$281E lives, $281F ?, $2820 two players",
    "bytes": [
     0,
@@ -311,7 +303,6 @@
    "name": "gameStateInit",
    "addr": "$27F1",
    "length": 20,
-   "reader": "$27E1",
    "what": "copied to $2805 at the start of a game",
    "bytes": [
     0,
@@ -340,7 +331,6 @@
    "name": "rowLo",
    "addr": "$2F72",
    "length": 25,
-   "reader": "$2E9C, $2C08, $1953, $25D0",
    "what": "screen row addresses $CC00+40*row, low bytes",
    "bytes": [
     0,
@@ -374,7 +364,6 @@
    "name": "rowHi",
    "addr": "$2F8B",
    "length": 25,
-   "reader": "$2E9C, $2C08",
    "what": "high bytes",
    "bytes": [
     204,
@@ -408,7 +397,6 @@
    "name": "forceTables",
    "addr": "$2FA4",
    "length": 30,
-   "reader": "$2F05",
    "what": "by Force level $33 (0-4): $2FA4 sprite pointer, $2FA9 last animation pointer, $2FAE animation speed, $2FB3 X offset behind, $2FB8 X offset in front, $2FBD Y offset",
    "bytes": [
     0,
@@ -447,7 +435,6 @@
    "name": "forceVars",
    "addr": "$2FC2",
    "length": 25,
-   "reader": "$2F05, $2821, $2A12, $2B5B",
    "what": "$2FC2-$2FC7 the level's six values, $2FC8 width and $2FCD height in characters by level, $2FD2/$2FD3 return direction X/Y, $2FD4 ship X high, $2FD5/$2FD6 colour cycle, $2FD7/$2FD8 drift counters, $2FD9/$2FDA drift",
    "bytes": [
     0,
@@ -481,7 +468,6 @@
    "name": "forceColors",
    "addr": "$2FDB",
    "length": 31,
-   "reader": "$2F4C",
    "what": "the colour cycle of sprite 0 ($D027)",
    "bytes": [
     7,
@@ -521,7 +507,6 @@
    "name": "bitsVars",
    "addr": "$3079",
    "length": 4,
-   "reader": "$2FFA, $1B61",
    "what": "$3079 upper bit, $307A lower bit, $307B frame counter (6), $307C animation phase (0-7)",
    "bytes": [
     0,
@@ -534,7 +519,6 @@
    "name": "bitsAddr",
    "addr": "$307D",
    "length": 15,
-   "reader": "$3037",
    "what": "by tilt frame (0-4): $307D/$3087 address of the upper bit in the sprite, $3082/$3087 of the lower one",
    "bytes": [
     0,
@@ -558,7 +542,6 @@
    "name": "bitsFrames",
    "addr": "$308C",
    "length": 32,
-   "reader": "$301C",
    "what": "by phase (0-7): $308C/$3094 source of the upper bit, $309C/$30A4 of the lower one",
    "bytes": [
     172,
@@ -599,7 +582,6 @@
    "name": "bitsShapes",
    "addr": "$30AC",
    "length": 240,
-   "reader": "$305B, $306B",
    "what": "eight frames of 30 bytes: the bit drawn into the ship's sprite",
    "bytes": [
     0,
@@ -848,7 +830,6 @@
    "name": "bitsSrc1",
    "addr": "$305C",
    "length": 2,
-   "reader": "$305B operand",
    "what": "self-modified: source of the upper bit",
    "bytes": [
     172,
@@ -859,7 +840,6 @@
    "name": "bitsDst1",
    "addr": "$305F",
    "length": 2,
-   "reader": "$305E operand",
    "what": "self-modified: destination of the upper bit",
    "bytes": [
     0,
@@ -870,7 +850,6 @@
    "name": "bitsSrc2",
    "addr": "$306C",
    "length": 2,
-   "reader": "$306B operand",
    "what": "self-modified: source of the lower bit",
    "bytes": [
     172,
@@ -881,7 +860,6 @@
    "name": "bitsDst2",
    "addr": "$306F",
    "length": 2,
-   "reader": "$306E operand",
    "what": "self-modified: destination of the lower bit",
    "bytes": [
     0,
@@ -892,7 +870,6 @@
    "name": "deathAnim",
    "addr": "$32C8",
    "length": 5,
-   "reader": "$31EB, $31FC",
    "what": "$32C8 frames left, $32C9 countdown, $32CA-$32CC colours of the explosion",
    "bytes": [
     2,
@@ -906,7 +883,6 @@
    "name": "score",
    "addr": "$3384",
    "length": 33,
-   "reader": "$32CD, $23B0, $1C26",
    "what": "$3384 index, $3385-$338A increments per digit, $338B-$3390 digits of player 1, $3391-$3396 of player 2, $3397-$33A4 ?",
    "bytes": [
     0,
@@ -948,7 +924,6 @@
    "name": "oneUp",
    "addr": "$33F1",
    "length": 10,
-   "reader": "$33A5",
    "what": "$33F1 counter (16), $33F2 phase, $33F3-$33F6 the glyphs of 1UP, $33F7-$33FA of 2UP",
    "bytes": [
     16,
@@ -967,7 +942,6 @@
    "name": "sounds",
    "addr": "$3413",
    "length": 45,
-   "reader": "$33FB",
    "what": "$3413 priority counter, $3414-$3429 duration by sound, $342A-$343F priority by sound",
    "bytes": [
     1,
@@ -1021,7 +995,6 @@
    "name": "fireRoutine",
    "addr": "$3B99",
    "length": 2,
-   "reader": "$3B98 operand",
    "what": "self-modified: the Force's fire routine ($17FA none, $42FA blue, $47A1 yellow, $4CB3 red)",
    "bytes": [
     250,
@@ -1032,7 +1005,6 @@
    "name": "fireLast",
    "addr": "$3D73",
    "length": 1,
-   "reader": "$3B74",
    "what": "the fire bit of the last frame",
    "bytes": [
     0
@@ -1042,7 +1014,6 @@
    "name": "shots",
    "addr": "$3ED5",
    "length": 27,
-   "reader": "$3D97, $3BAE",
    "what": "four basic shots: $3ED5 state, $3ED9/$3EDD screen address, $3EE1 column, $3EE5 char under, $3EE9 colour under; $3EED ship column, $3EEE/$3EEF ship row address",
    "bytes": [
     0,
@@ -1078,7 +1049,6 @@
    "name": "forceShotTables",
    "addr": "$3CEE",
    "length": 16,
-   "reader": "$3C4F",
    "what": "two shots of the detached Force: $3CEE row offset, $3CF2 Y step, $3CF6/$3CFA char by direction",
    "bytes": [
     0,
@@ -1103,7 +1073,6 @@
    "name": "forceShotTables4",
    "addr": "$3D57",
    "length": 29,
-   "reader": "$3CA5",
    "what": "four shots of the level-4 Force: $3D57 column, $3D5B row offset, $3D5F Y step, $3D63/$3D67 X step, $3D6B/$3D6F char",
    "bytes": [
     0,
@@ -1141,7 +1110,6 @@
    "name": "forceShots",
    "addr": "$40AA",
    "length": 39,
-   "reader": "$3EF0",
    "what": "four shots of the Force: $40AA state, $40AE/$40B2 address, $40B6 column, $40BA/$40BE under, $40C2 X step, $40C6 Y step, $40CA char; $40CE Force column, $40CF/$40D0 Force row address",
    "bytes": [
     0,
@@ -1189,7 +1157,6 @@
    "name": "beam",
    "addr": "$4284",
    "length": 26,
-   "reader": "$416C, $410B",
    "what": "$4284 frame, $428C level (0-2), $428D column, $428E-$4290 chars, $4291-$4293 under, $4294-$4296 colours under, $4297-$429C the frames, $429D flag",
    "bytes": [
     1,
@@ -1224,7 +1191,6 @@
    "name": "beamCharge",
    "addr": "$4114",
    "length": 1,
-   "reader": "$4113 operand",
    "what": "self-modified: the charge at release",
    "bytes": [
     0
@@ -1234,7 +1200,6 @@
    "name": "laserBlue",
    "addr": "$4791",
    "length": 16,
-   "reader": "$43E1",
    "what": "two beams: $4791 state, $4793/$4795 address, $4797 column, $4799 X direction, $479B Y direction, $479D char under, $479F colour under",
    "bytes": [
     0,
@@ -1259,7 +1224,6 @@
    "name": "laserYellowTemp",
    "addr": "$4C4B",
    "length": 3,
-   "reader": "$4C3E operands",
    "what": "self-modified: $4C4B the slot, $4C4D the property",
    "bytes": [
     0,
@@ -1271,7 +1235,6 @@
    "name": "laserYellow",
    "addr": "$4C4F",
    "length": 100,
-   "reader": "$4848",
    "what": "six beams: $4C4F state, $4C55/$4C5B address, $4C61 column, $4C67 X step, $4C6D Y step, $4C73 direction (1-4), $4C79/$4C7D direction handlers, $4C81 row offsets, $4C85 char under, $4C8B colour under, $4C91/$4C92 glyph animation counters, $4C93-$4CB2 four frames of glyph $DD",
    "bytes": [
     0,
@@ -1380,7 +1343,6 @@
    "name": "laserYellowGlyphSrc",
    "addr": "$4855",
    "length": 2,
-   "reader": "$4854 operand",
    "what": "self-modified: the frame copied to $C6E8",
    "bytes": [
     147,
@@ -1391,7 +1353,6 @@
    "name": "laserYellowDispatch",
    "addr": "$495E",
    "length": 4,
-   "reader": "$495D operand, $4960",
    "what": "self-modified: X and the handler of JMP ($4960)",
    "bytes": [
     0,
@@ -1404,7 +1365,6 @@
    "name": "laserRed",
    "addr": "$4EAC",
    "length": 20,
-   "reader": "$4D08",
    "what": "$4EAC state, $4EAD/$4EAE row address, $4EAF column, $4EB0 phase, $4EB1-$4EB3 wave phase per row, $4EB4/$4EB5 temps, $4EB6 end; $4EB7-$4EBF chars",
    "bytes": [
     0,
@@ -1433,7 +1393,6 @@
    "name": "missiles",
    "addr": "$1FD8",
    "length": 25,
-   "reader": "$1E14, $1CBC",
    "what": "two: $1FD8 state, $1FDA/$1FDC address, $1FDE column, $1FE0 under, $1FE2 colour under, $1FE4 X direction, $1FE6 Y direction, $1FE8 char, $1FEA delay; $1FEC-$1FEF target; $1FF0 missiles owned",
    "bytes": [
     0,
@@ -1467,7 +1426,6 @@
    "name": "missileTarget",
    "addr": "$1CAC",
    "length": 5,
-   "reader": "$1C47 operands",
    "what": "self-modified: distances to the nearest enemy",
    "bytes": [
     0,
@@ -1481,7 +1439,6 @@
    "name": "items",
    "addr": "$1B49",
    "length": 24,
-   "reader": "$1B01",
    "what": "$1B49 colours and $1B4F sprites of the items a carrier turns into (crystal blue/yellow/red, speed, missiles, bit), $1B55-$1B60 their path",
    "bytes": [
     6,
@@ -1514,7 +1471,6 @@
    "name": "fireRoutines",
    "addr": "$1BFC",
    "length": 16,
-   "reader": "$1BE6",
    "what": "by crystal colour: low/high byte of the Force's fire routine",
    "bytes": [
     226,
@@ -1539,7 +1495,6 @@
    "name": "temp1A67",
    "addr": "$1A67",
    "length": 1,
-   "reader": "$1A66 operand",
    "what": "self-modified",
    "bytes": [
     10
@@ -1549,7 +1504,6 @@
    "name": "temp1C43",
    "addr": "$1C43",
    "length": 1,
-   "reader": "$1C42 operand",
    "what": "self-modified: the slot after a pickup",
    "bytes": [
     0
@@ -1559,7 +1513,6 @@
    "name": "temp1DB6",
    "addr": "$1DB6",
    "length": 1,
-   "reader": "operand",
    "what": "self-modified",
    "bytes": [
     0
@@ -1569,7 +1522,6 @@
    "name": "temp1EC7",
    "addr": "$1EC7",
    "length": 1,
-   "reader": "operand",
    "what": "self-modified",
    "bytes": [
     0
@@ -1579,7 +1531,6 @@
    "name": "temp226B",
    "addr": "$226B",
    "length": 1,
-   "reader": "$226A operand",
    "what": "self-modified: explosion column",
    "bytes": [
     0
@@ -1589,7 +1540,6 @@
    "name": "temp2274",
    "addr": "$2274",
    "length": 1,
-   "reader": "$2273 operand",
    "what": "self-modified: explosion char",
    "bytes": [
     0
@@ -1599,7 +1549,6 @@
    "name": "temp2289",
    "addr": "$2289",
    "length": 1,
-   "reader": "$2288 operand",
    "what": "self-modified: explosion phase",
    "bytes": [
     0
@@ -1609,7 +1558,6 @@
    "name": "temp2C51",
    "addr": "$2C51",
    "length": 1,
-   "reader": "$2C50 operand",
    "what": "self-modified: Force scan column",
    "bytes": [
     0
@@ -1619,7 +1567,6 @@
    "name": "temp348C",
    "addr": "$348C",
    "length": 1,
-   "reader": "$348B operand",
    "what": "self-modified",
    "bytes": [
     0
@@ -1629,7 +1576,6 @@
    "name": "temp34B7",
    "addr": "$34B7",
    "length": 1,
-   "reader": "$34B6 operand",
    "what": "self-modified",
    "bytes": [
     0
@@ -1639,7 +1585,6 @@
    "name": "temp250C",
    "addr": "$250C",
    "length": 1,
-   "reader": "$250B operand",
    "what": "self-modified (enemy aim)",
    "bytes": [
     0
@@ -1649,7 +1594,6 @@
    "name": "temp250E",
    "addr": "$250E",
    "length": 1,
-   "reader": "$250D operand",
    "what": "self-modified (enemy aim)",
    "bytes": [
     0
@@ -1659,7 +1603,6 @@
    "name": "explosionTables",
    "addr": "$23DA",
    "length": 85,
-   "reader": "$23B0",
    "what": "by type (0-6): $23DA width, $23E1 height, $23E8 last frame, $23EF/$23F6 pointer to the chars; $23FD-$242E the chars",
    "bytes": [
     1,
@@ -1753,7 +1696,6 @@
    "name": "explosions",
    "addr": "$242F",
    "length": 105,
-   "reader": "$2154, $221C",
    "what": "six: $242F state, $2435/$243B address, $2441 column, $2447 width, $244D height, $2453 tick, $2459 frame, $245F last frame, $2465 last column, $246B phase, $2471/$2477 chars, $247D/$2483 buffer of the chars under ($0100 page), $2489/$248F of the colours; $2495-$2497 phase table",
    "bytes": [
     0,
@@ -1867,7 +1809,6 @@
    "name": "enemyBullets",
    "addr": "$26D0",
    "length": 21,
-   "reader": "$2562",
    "what": "$26D0 temp, $26D1 phase, $26D2-$26D5 chars by quarter, $26D6 colour, $26D7-$26DA colours, $26DB-$26E4 chars/colours of aimed bullets",
    "bytes": [
     0,
@@ -1897,7 +1838,6 @@
    "name": "blockReplaceMod",
    "addr": "$206C",
    "length": 16,
-   "reader": "$2049",
    "what": "by level: the modulus of the row for the replacement table",
    "bytes": [
     0,
@@ -1922,7 +1862,6 @@
    "name": "blockReplaceColor",
    "addr": "$2074",
    "length": 8,
-   "reader": "$1FF6",
    "what": "by level: colour of a destroyed block's replacement, $D3 = none",
    "bytes": [
     211,
@@ -1939,7 +1878,6 @@
    "name": "blockReplaceChars",
    "addr": "$208C",
    "length": 200,
-   "reader": "$2067 via $207C",
    "what": "replacement chars of destroyed blocks (levels 2, 5, 6, 7)",
    "bytes": [
     180,
@@ -2148,7 +2086,6 @@
    "name": "destructibleTables",
    "addr": "$34C0",
    "length": 16,
-   "reader": "$3440",
    "what": "by level: low/high byte of the table of destructible objects",
    "bytes": [
     212,
@@ -2173,7 +2110,6 @@
    "name": "destructibles",
    "addr": "$34D0",
    "length": 43,
-   "reader": "$3440",
    "what": "records (char, column offset, row offset, explosion type), $D3 ends",
    "bytes": [
     178,
@@ -2225,7 +2161,6 @@
    "name": "spriteXHigh",
    "addr": "$56BD",
    "length": 15,
-   "reader": "$3A40",
    "what": "per sprite slot: the X high bits a slot takes when its X wraps (level 3, the window moving left)",
    "bytes": [
     8,
@@ -2380,13 +2315,6 @@
    },
    "where": "$0AE7, $0B47: where sprite 1 goes"
   },
-  "twoPlayersOff": {
-   "value": {
-    "title": "$82FB",
-    "tapeEnd": "$5ED9"
-   },
-   "where": "LDA #5 / BNE where CMP #5 / BEQ (F3) once was: the two-player mode is switched off"
-  },
   "ending": {
    "value": {
     "file": "E",
@@ -2395,27 +2323,6 @@
     "exit": "$FCE2"
    },
    "where": "$0A7B: level $D3 loads E and runs $8000; its credits end in a RESET"
-  },
-  "entropyReads": {
-   "value": [
-    "$24B7",
-    "$250F",
-    "$2521",
-    "$2B60",
-    "$2B68",
-    "$2B77",
-    "$2B7F",
-    "$4FED",
-    "$5085",
-    "$5286",
-    "$5290",
-    "$5299",
-    "$54C7",
-    "$54D1",
-    "$54DA",
-    "$5E09"
-   ],
-   "where": "LDA $DC04 in the core — the remake's generator stands there"
   }
  }
 }

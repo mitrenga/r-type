@@ -1,9 +1,6 @@
 {
- "source": "R-Type, kazeta Electric Dreams, strana A, jádro M (titulka $8000); tools/dumptitle.py",
- "note": "logo titulky: 7 x 39 screen codes (sloupce 1-39) do vlastní sady $85CB -> $C000 (6 stránek), multicolour $D016 = $18, Color RAM $09 (bílá), $D022 = 3, $D023 = 11, pozadí 0",
  "charset": {
   "addr": "$85CB",
-  "shown": "$C000",
   "pages": 6,
   "bytes": [
    0,
@@ -1545,16 +1542,6 @@
   ]
  },
  "logo": {
-  "addrs": [
-   "$84A6",
-   "$84CE",
-   "$84F6",
-   "$851E",
-   "$8546",
-   "$856E",
-   "$8596"
-  ],
-  "shownRows": "4-10, then 11-17 ($811B)",
   "column": 1,
   "width": 39,
   "height": 7,

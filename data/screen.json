@@ -1,6 +1,5 @@
 {
  "source": "R-Type, kazeta, \u00farove\u0148 1, 300 p\u0159eru\u0161en\u00ed hry; tools/mkscreen.py",
- "note": "bank = RAM $C000-$FFFF na za\u010d\u00e1tku plochy ($0D04, rastr 48); vic = $D000-$D02E na $0D04; colorRAM tamt\u00e9\u017e; writes = ka\u017ed\u00fd z\u00e1pis do $D000-$D02E, $CC00-$CFFF a $D800-$DBE7 b\u011bhem sn\u00edmku (rastr, cyklus, hodnota)",
  "vicBank": 3,
  "dd00": 144,
  "vic": [

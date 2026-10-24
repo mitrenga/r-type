@@ -8,7 +8,6 @@
  * - `levels`   – the eight levels: blocks, map scripts, tables (dumplevels.py)
  * - `charsets` – the character sets of the playfield and the panel (dumpcharset.py)
  * - `sprites`  – the sprite blocks of the ship and of every level (dumpsprites.py)
- * - `waves`    – the enemy waves and type tables (dumpwaves.py)
  * - `texts`    – the panel, the texts, the colour tables (dumptexts.py)
  * - `global`   – the core's tables and constants (dumpglobal.py)
  * - `ship`     – the tables and start values of the ship's code (dumpship.py)
@@ -17,13 +16,16 @@
  * - `picture`  – the loading picture of side A, file P (dumppicture.py)
  * - `title`    – the logo of the title screen: its character set and screen codes (dumptitle.py)
  *
+ * The files carry no notes or provenance (`rtlib.strip_notes` in the tools):
+ * the application keeps them in localStorage and reads only the data.
  * A missing file arrives as null and the application has to live with it.
  * `hiScore` is the best score of the local database (`config/createDB.sql`,
  * `db/saveGame.php`), or 0 without one.
  */
 class DataCommand {
 
-  var $sections = ['levels', 'charsets', 'sprites', 'waves', 'texts', 'global', 'ship', 'enemies', 'music', 'picture', 'title'];
+  // `waves` (dumpwaves.py) is not sent: the game runs the waves from the enemies' memory, the file is for the tools
+  var $sections = ['levels', 'charsets', 'sprites', 'texts', 'global', 'ship', 'enemies', 'music', 'picture', 'title'];
 
   public function execute($postData) {
     $result = [];

@@ -1,14 +1,7 @@
 {
-"source": "R-Type, kazeta Electric Dreams; tools/dumpsprites.py (obraz paměti z kazety, kopie jako $1794)",
-"note": "ukazatel p = $C000 + p*64 (banka 3, sprajty pod I/O a KERNALem); bloky samé nuly se vynechávají",
 "blockBytes": 64,
-"runtime": [
-"$1425 maže části $D000-$D27E (loď se skládá za běhu, M3)",
-"$124B maže $FD40-$FF3F; $9531 (úroveň 1) tam kreslí animaci"
-],
 "globalBlocks": {
 "addr": "$D000-$DFFF",
-"source": "$8E53 (M strany A, $1794)",
 "blocks": [
 {
 "pointer": "$40",
@@ -4432,7 +4425,6 @@
 {
 "level": 1,
 "addr": "$E800-$FD3F",
-"source": "S",
 "blocks": [
 {
 "pointer": "$A0",
@@ -10389,7 +10381,6 @@
 {
 "level": 2,
 "addr": "$E800-$F9FF",
-"source": "S",
 "blocks": [
 {
 "pointer": "$A0",
@@ -15436,7 +15427,6 @@
 {
 "level": 3,
 "addr": "$E800-$EE7F",
-"source": "S",
 "blocks": [
 {
 "pointer": "$A0",
@@ -17263,7 +17253,6 @@
 {
 "level": 4,
 "addr": "$E800-$EF7F",
-"source": "S",
 "blocks": [
 {
 "pointer": "$A0",
@@ -19370,7 +19359,6 @@
 {
 "level": 5,
 "addr": "$E800-$ECFF",
-"source": "S",
 "blocks": [
 {
 "pointer": "$A0",
@@ -20777,13 +20765,11 @@
 {
 "level": 6,
 "addr": "$E800-$E4FF",
-"source": "S",
 "blocks": []
 },
 {
 "level": 7,
 "addr": "$E800-$F0FF",
-"source": "S",
 "blocks": [
 {
 "pointer": "$A0",
@@ -23240,7 +23226,6 @@
 {
 "level": 8,
 "addr": "$E800-$F27F",
-"source": "S",
 "blocks": [
 {
 "pointer": "$A0",
