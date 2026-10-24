@@ -53,10 +53,10 @@ def main():
     hits = r.log.count('(Stop on  exec')
     os.makedirs(os.path.dirname(a.o), exist_ok=True)
     with open(a.o, 'w') as f:
-        f.write('# PC vzorkované z běhu originálu (tools/tracecoverage.py): %d zastavení '
-                'na $%04X po %d přerušeních, historie %d instrukcí%s\n'
+        f.write('# PCs sampled from a run of the original (tools/tracecoverage.py): %d stops '
+                'at $%04X every %d interrupts, history of %d instructions%s\n'
                 % (hits, GAME_IRQ, a.every, a.history,
-                   ', kolize vypnuté ($319C = RTS)' if a.immortal else ''))
+                   ', collisions off ($319C = RTS)' if a.immortal else ''))
         for pc in pcs:
             f.write('%04X\n' % pc)
     print('%d stops, %d distinct PCs -> %s' % (hits, len(pcs), a.o))

@@ -71,9 +71,9 @@ def main():
     core = rtlib.core_files()
     m0 = rtlib.image(core=core)
     out = dict(
-        source='R-Type, kazeta Electric Dreams (jádro G strany A, soubory M a G každé úrovně); tools/dumpenemies.py',
-        note='paměť kódu nepřátel a bossů na adresách originálu: jádro $4F00-$5FBB, M úrovně $7AC0-$86AB, G úrovně $8E6C-$99FF; '
-             'app/enemies.js a app/levelCode.js v ní mají proměnné, tools/matchenemies.mjs ji srovnává celou',
+        source='R-Type, Electric Dreams tape (core G of side A, files M and G of each level); tools/dumpenemies.py',
+        note='the memory of the enemy and boss code at the original\'s addresses: core $4F00-$5FBB, the level\'s M $7AC0-$86AB, the level\'s G $8E6C-$99FF; '
+             'app/enemies.js and app/levelCode.js keep their variables in it, tools/matchenemies.mjs compares all of it',
         core=dict(addr='$%04X-$%04X' % (CORE[0], CORE[1]-1), what='spawner $4FA8, state machine $518D, boss $56CF-$5E46, tables and operands',
                   variables=CORE_VARS, bytes=list(m0[CORE[0]:CORE[1]])),
         levels=[])
@@ -89,7 +89,7 @@ def main():
             variables=LEVEL_VARS.get(n, {})))
         print('level %d: M $%04X-$%04X (file to $%04X), G $%04X-$%04X (file to $%04X)'
               % (n, LEVEL_M[0], LEVEL_M[1]-1, 0x6370 + len(files['M']), LEVEL_G[0], LEVEL_G[1]-1, 0x86AC + len(files['G'])))
-    json.dump(out, open(a.o, 'w'), indent=None, separators=(',', ':'), ensure_ascii=False)
+    rtlib.save_json(out, a.o, drop=('variables', 'fileEnd'), indent=None, separators=(',', ':'), ensure_ascii=False)   # without the notes (rtlib.strip_notes)
     print('core $%04X-$%04X, %d levels -> %s (%d KB)' % (CORE[0], CORE[1]-1, 8, a.o, os.path.getsize(a.o)//1024))
 
 

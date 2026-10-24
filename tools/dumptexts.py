@@ -80,14 +80,14 @@ def main():
     ]
     panel['later'] = '$32CD/$33A5 print the score and the high score into rows 22-23 on the first frame ($0E4E) — M5'
     out = dict(
-        source='R-Type, kazeta Electric Dreams (jádro G, M strany A); tools/dumptexts.py',
-        note='kódy znaků sady panelu ($C800); abeceda a-z = $57-$70, 0-9 = $71-$7A, mezera 0 — odečtená z $5F0D',
+        source='R-Type, Electric Dreams tape (core G, M of side A); tools/dumptexts.py',
+        note='character codes of the panel set ($C800); alphabet a-z = $57-$70, 0-9 = $71-$7A, space 0 — read off $5F0D',
         alphabet={('$%02X' % k): v for k, v in sorted(ALPHA.items())},
         panel=panel, blocks=blocks, title=title,
         credits=dict(addr='$%04X' % CREDITS[0], codes=list(m[CREDITS[0]:CREDITS[1]]),
                      text=''.join(chr(c+64) if 1 <= c <= 26 else ' ' if c in (0x20, 0) else chr(c) if 0x20 < c < 0x60 else '?'
                                   for c in m[CREDITS[0]:CREDITS[1]])))
-    json.dump(out, open(a.o, 'w'), indent=1, ensure_ascii=False)
+    rtlib.save_json(out, a.o, drop=('alphabet', 'printer', 'reader', 'who', 'later'), indent=1, ensure_ascii=False)   # without the notes (rtlib.strip_notes)
     for k, b in blocks.items():
         print('%-10s %s %s' % (k, b['addr'], ' | '.join(b['text'])))
     print('credits:', out['credits']['text'])

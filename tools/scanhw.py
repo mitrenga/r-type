@@ -68,7 +68,7 @@ def main():
     a = ap.parse_args()
     acc = scan(a.asm)
     if a.md:
-        print('| registr | čtení | zápis | RMW | jiné |\n|---|---|---|---|---|')
+        print('| register | read | write | RMW | other |\n|---|---|---|---|---|')
     for addr in sorted(acc):
         k = acc[addr]
         cols = [k.get('r', []), k.get('w', []), k.get('rw', [])]

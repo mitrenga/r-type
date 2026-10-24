@@ -28,10 +28,10 @@ READY = 0x0C27
 DISK = os.path.join(PROJECT, 'sources', 'disk')
 # ★ regions of the running game (sources/tape/README.md, disasm_notes §1)
 REGIONS = [
-    (0x0812, 0x5FBC, 'jádro G (kód hry)'),
-    (0x6370, 0x86A1, 'úroveň 1: M (hudba a ?)'),
-    (0x86AC, 0x99FF, 'úroveň 1: G'),
-    (0xE000, 0xFD40, 'úroveň 1: S'),
+    (0x0812, 0x5FBC, 'core G (the game code)'),
+    (0x6370, 0x86A1, 'level 1: M (music and ?)'),
+    (0x86AC, 0x99FF, 'level 1: G'),
+    (0xE000, 0xFD40, 'level 1: S'),
 ]
 # crack -> image and the monitor steps through its intro (each one measured)
 CRACKS = {
@@ -103,13 +103,13 @@ def main():
         for lo, hi, what in REGIONS:
             d = [i for i in range(lo, hi) if R[i] != C[i]]
             total += hi - lo
-            print('  %-8s $%04X-$%04X %-26s %6d B  %5d rozdílů' % (name, lo, hi - 1, what, hi - lo, len(d)))
+            print('  %-8s $%04X-$%04X %-26s %6d B  %5d differences' % (name, lo, hi - 1, what, hi - lo, len(d)))
             for s, e in runs(d)[:12]:
-                print('      $%04X-$%04X (%d B): páska %s | crack %s' % (
+                print('      $%04X-$%04X (%d B): tape %s | crack %s' % (
                     s, e, e - s + 1, R[s:min(e + 1, s + 8)].hex(), C[s:min(e + 1, s + 8)].hex()))
             if len(runs(d)) > 12:
-                print('      … %d úseků' % len(runs(d)))
-    print('porovnáno %d B' % total)
+                print('      … %d runs' % len(runs(d)))
+    print('compared %d B' % total)
 
 
 if __name__ == '__main__':

@@ -48,18 +48,18 @@ export class BorderEntity extends AbstractEntity {
       this.addEntity(this.escapeEntity);
     }
 
-    // ★ **Počitadlo snímků patří do rámečku, ne do obrazu.** Plocha je
-    // **pixel po pixelu shodná se strojem** (`tools/matchscreen.mjs`), text
-    // přes ni by srovnání s originálem znemožnil.
+    // ★ **The frame counter belongs in the border, not in the picture.** The
+    // playfield is **pixel for pixel the machine's** (`tools/matchscreen.mjs`);
+    // text over it would make the comparison with the original impossible.
     if (typeof this.app.devModeName === 'string') {
       this.fpsEntity = new TextEntity(this, this.app.fonts.fonts5x5, 0, 0, 80, 7,
                                       '', C64Color.color(7), false, {margin: 1});
       this.addEntity(this.fpsEntity);
     }
 
-    // ★ `devModeName` je **řetězec, nebo nic**: tenhle projekt ho na rozdíl
-    // od sourozenců nemusí dostat (`app/main.js` ho předává, jen když ho
-    // `window` má), a `undefined !== false` je pravda — na to se dá naletět
+    // ★ `devModeName` is **a string, or nothing**: unlike its siblings this
+    // project need not get it (`app/main.js` passes it only when `window`
+    // has it), and `undefined !== false` is true — an easy trap to fall into
     if (typeof this.app.devModeName === 'string') {
       this.devModeNameEntity = new TextEntity(this, this.app.fonts.fonts5x5, 0, -7, 100, 7, '', false, false, {margin: 1});
       var cfgLen = this.app.devModeName.indexOf('}');
@@ -99,12 +99,12 @@ export class BorderEntity extends AbstractEntity {
   /**
    * What the dev-mode indicator says: how many frames a second the model
    * **draws**, and how many `frame` messages a second come from the worker.
-   * ★ Bez toho se nepozná, jestli obraz drží krok se světem, nebo jestli se
-   * překresluje nadarmo (R-037).
+   * ★ Without it there is no telling whether the picture keeps step with
+   * the world or is redrawn for nothing (R-037).
    * @param {string} text - For instance `60/50 FPS`.
    */
   setFps(text) {
-    // `setText` si sám pozná, že se nic nezměnilo, a cache nezahodí
+    // `setText` notices by itself that nothing changed and keeps the cache
     if (this.fpsEntity) { this.fpsEntity.setText(text); }
   } // setFps
 
@@ -140,7 +140,7 @@ export class BorderEntity extends AbstractEntity {
           }
         }
         if (this.fpsEntity) {
-          // vlevo dole v rámečku, pod obrazem; když dole místo není, nahoře
+          // bottom left in the border, under the picture; at the top when there is no room below
           this.fpsEntity.x = 1;
           this.fpsEntity.y = this.model.borderHeight >= 7
             ? this.height-this.model.borderHeight : 0;

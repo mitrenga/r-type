@@ -127,12 +127,12 @@ def main():
     for at, n, name, reader, what in REGIONS:
         regions.append(dict(name=name, addr='$%04X' % at, length=n, reader=reader, what=what, bytes=list(m[at:at+n])))
     out = dict(
-        source='R-Type, kazeta Electric Dreams (jádro G strany A); tools/dumpship.py',
-        note='tabulky a počáteční hodnoty proměnných kódu lodi na adresách originálu; čte je app/ship.js, '
-             'měří tools/matchship.mjs',
+        source='R-Type, Electric Dreams tape (core G of side A); tools/dumpship.py',
+        note='tables and start values of the ship code\'s variables at the original\'s addresses; app/ship.js reads them, '
+             'tools/matchship.mjs measures them',
         regions=regions,
         constants={name: dict(value=value, where=where) for name, value, where in CONSTANTS})
-    json.dump(out, open(a.o, 'w'), indent=1, ensure_ascii=False)
+    rtlib.save_json(out, a.o, drop=('reader', 'twoPlayersOff', 'entropyReads'), indent=1, ensure_ascii=False)   # without the notes (rtlib.strip_notes)
     total = sum(r['length'] for r in regions)
     for r in regions:
         print('%s %-22s %3d B  %s' % (r['addr'], r['name'], r['length'], r['reader']))

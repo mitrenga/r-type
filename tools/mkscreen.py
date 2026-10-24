@@ -27,6 +27,7 @@ pass counts the stops up to it, the second makes exactly that many and quits
     tools/mkscreen.py --level 2 --at 300 --immortal -o build/screens2/f300.json
 """
 import argparse, base64, json, os, re, sys
+import rtlib  # noqa: E402
 HERE = os.path.dirname(os.path.abspath(__file__))
 PROJECT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
@@ -131,11 +132,11 @@ def record(a):
     iob = open(os.path.join(tmp, 'bottom_io.bin'), 'rb').read()
     b64 = lambda b: base64.b64encode(bytes(b)).decode()
     out = dict(
-        source='R-Type, kazeta, úroveň %d, %d přerušení hry%s; tools/mkscreen.py'
-               % (a.level, a.at, ', kolize vypnuté' if a.immortal else ''),
-        note='bank = RAM $C000-$FFFF na začátku plochy ($0D04, rastr 48); vic = $D000-$D02E '
-             'na $0D04; colorRAM tamtéž; writes = každý zápis do '
-             '$D000-$D02E, $CC00-$CFFF a $D800-$DBE7 během snímku (rastr, cyklus, hodnota)',
+        source='R-Type, tape, level %d, %d game interrupts%s; tools/mkscreen.py'
+               % (a.level, a.at, ', collisions off' if a.immortal else ''),
+        note='bank = RAM $C000-$FFFF at the top of the playfield ($0D04, raster 48); vic = $D000-$D02E '
+             'at $0D04; colorRAM likewise; writes = every store into '
+             '$D000-$D02E, $CC00-$CFFF and $D800-$DBE7 during the frame (raster, cycle, value)',
         vicBank=3 - (io[0xD00] & 3), dd00=io[0xD00],
         vic=list(io[0:0x2F]),
         bank=b64(top[0xC000:0x10000]),
@@ -143,7 +144,7 @@ def record(a):
         writes=writes,
         screenshot=os.path.relpath(shot, PROJECT))
     os.makedirs(os.path.dirname(os.path.abspath(a.o)), exist_ok=True)
-    json.dump(out, open(a.o, 'w'), indent=1)
+    rtlib.save_json(out, a.o, source=True, indent=1)   # `source` stays (matchcompose.mjs reads the level from it), `note` does not
     print('%d writes during the frame, picture %s -> %s' % (len(writes), out['screenshot'], a.o))
 
 

@@ -69,14 +69,14 @@ def main():
         levels.append(dict(level=n, addr='$%04X-$%04X' % (LEVEL_FIRST, end-1), source='S', blocks=lv))
         print('level %d: %d blocks $A0-$%02X' % (n, len(lv), (end - BANK)//64 - 1))
     out = dict(
-        source='R-Type, kazeta Electric Dreams; tools/dumpsprites.py (obraz paměti z kazety, kopie jako $1794)',
-        note='ukazatel p = $C000 + p*64 (banka 3, sprajty pod I/O a KERNALem); bloky samé nuly se vynechávají',
+        source='R-Type, Electric Dreams tape; tools/dumpsprites.py (memory image from the tape, copy as $1794)',
+        note='pointer p = $C000 + p*64 (bank 3, sprites under the I/O and the KERNAL); all-zero blocks are left out',
         blockBytes=64,
-        runtime=['$1425 maže části $D000-$D27E (loď se skládá za běhu, M3)',
-                 '$124B maže $FD40-$FF3F; $9531 (úroveň 1) tam kreslí animaci'],
-        globalBlocks=dict(addr='$D000-$DFFF', source='$8E53 (M strany A, $1794)', blocks=glob),
+        runtime=['$1425 clears parts of $D000-$D27E (the ship is composed at run time, M3)',
+                 '$124B clears $FD40-$FF3F; $9531 (level 1) draws an animation there'],
+        globalBlocks=dict(addr='$D000-$DFFF', source='$8E53 (side A\'s M, $1794)', blocks=glob),
         levels=levels)
-    json.dump(out, open(a.o, 'w'), indent=0, ensure_ascii=False)
+    rtlib.save_json(out, a.o, drop=('source', 'runtime',), indent=0, ensure_ascii=False)   # without the notes (rtlib.strip_notes)
     print('global %d blocks -> %s' % (len(glob), a.o))
 
 

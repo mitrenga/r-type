@@ -1,23 +1,24 @@
-# images/ — ikony aplikace a obálka
+# images/ — the app icons and the cover
 
-| soubor | co to je |
+| file | what it is |
 |---|---|
-| `poster.png` | plakát 1448 × 1086 (operátor, 2026-10-19): Open Graph obrázek `index.php` |
-| `cover.png` | obálka 800 × 600 pro `/about` (`aboutPage.php`), zmenšený plakát: `convert images/poster.png -resize 800x600 images/cover.png` |
+| `poster.png` | poster 1448 × 1086 (operator, 2026-10-19): the Open Graph image of `index.php` |
+| `cover.png` | cover 800 × 600 for `/about` (`aboutPage.php`), the poster scaled down: `convert images/poster.png -resize 800x600 images/cover.png` |
 
-`app-icon.svg` je **vlastní návrh pro remake** (operátor, 2026-10-22,
-„Cold Steel"): hranatá stíhačka po vzoru R-9 a plazmový výstřel na půlnoční
-modři, 1024 × 1024 v křivkách, bez rastru a bez textu — jméno hry vypisuje
-spouštěč pod ikonou. Skupiny `background` a `foreground` jsou oddělené,
-takže se dá upravovat. Logo titulky originálu, které má nahoře menu
-(`app/titleLogo.js`), zůstalo jen v menu.
+`app-icon.svg` is **an original design for the remake** (operator, 2026-10-22,
+"Cold Steel"): an angular fighter after the R-9 and a plasma shot on midnight
+blue, 1024 × 1024 in curves, no raster and no text — the launcher prints the
+game's name under the icon. The `background` and `foreground` groups are
+separate, so it can be edited. The original's title logo, which the menu has
+at the top (`app/titleLogo.js`), stayed in the menu only.
 
-PNG sadu a favicon z něj udělají nástroje knihovny (symlinky vedle):
+The PNG set and the favicon are made from it by the library's tools (symlinks
+alongside):
 
     ./make-app-icons      # app-icon-{192,256,512,1024,1980}x*.png
-    ./make-favicon        # favicon.ico (128/64/48/32/16), kopie patří i do kořene
+    ./make-favicon        # favicon.ico (128/64/48/32/16), a copy belongs in the root too
 
-`svision/php/appPage.php` na PNG odkazuje (`app-icon-*.png`).
+`svision/php/appPage.php` references the PNGs (`app-icon-*.png`).
 
-Ikony jsou **vlastní grafika** (výjimka operátora 2026-10-24, ne grafika originálu);
-projekt je veřejný (operátor 2026-10-24, `../ZADANI.md` §0).
+The icons are **original artwork** (operator's exception 2026-10-24, not the
+original's graphics); the project is public (operator 2026-10-24, `../ZADANI.md` §0).

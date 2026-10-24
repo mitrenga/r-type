@@ -37,8 +37,8 @@ def main():
     # ★ the registers the code writes, read off it (SEI, wait $FA, LDA #0 -> $D011/$D020/$D021/$DD00/$D015 …)
     assert code[:7] == [0x78, 0xAD, 0x12, 0xD0, 0xC9, 0xFA, 0xD0], code[:7]
     out = dict(
-        source='R-Type, kazeta Electric Dreams, strana A, soubor P ($7000-$985E); tools/dumppicture.py',
-        note='nahrávací obrázek: multicolour bitmapa 160 x 200 párů; 00 = $D021, 01 = horní nibble Screen RAM, 10 = dolní nibble, 11 = Color RAM',
+        source='R-Type, Electric Dreams tape, side A, file P ($7000-$985E); tools/dumppicture.py',
+        note='the loading picture: a multicolour bitmap of 160 x 200 pairs; 00 = $D021, 01 = high nibble of the Screen RAM, 10 = low nibble, 11 = Color RAM',
         file=dict(name='P', addr='$%04X' % FILE_START, length=len(p)),
         width=320, height=200,
         bitmap=dict(addr='$%04X' % BITMAP, shown='$E000', bytes=at(BITMAP, 8000)),
@@ -48,7 +48,7 @@ def main():
         vic={'$D011': 0x3B, '$D016': 0x18, '$D018': 0x38, '$DD00': 0, '$D015': 0},
         code=dict(addr='$%04X' % CODE, wait='$9849: SPACE through $DC01 bit 4', bytes=code),
     )
-    json.dump(out, open(a.o, 'w'), indent=1, ensure_ascii=False)
+    rtlib.save_json(out, a.o, drop=('shown',), indent=1, ensure_ascii=False)   # without the notes (rtlib.strip_notes)
     print('P: %d B, bitmap %d, screen %d, colour %d, code %d B -> %s' % (len(p), 8000, 1000, 1000, len(code), a.o))
 
 

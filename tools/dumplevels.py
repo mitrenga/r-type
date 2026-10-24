@@ -223,9 +223,9 @@ def main():
     if a.show:
         show(mems[a.show], levels[a.show-1]); return
     out = dict(
-        source='R-Type, kazeta Electric Dreams (strana B, soubory M/G/S každé úrovně; tabulky z jádra G strany A); tools/dumplevels.py',
-        note='mapa 19 × 512 na $9A00 se nestaví tady — staví ji rutina $162F z bloků a skriptu (app/levelScroll.js), '
-             'měří tools/matchlevels.mjs proti paměti originálu',
+        source='R-Type, Electric Dreams tape (side B, files M/G/S of each level; tables from core G of side A); tools/dumplevels.py',
+        note='the 19 × 512 map at $9A00 is not built here — the routine $162F builds it from the blocks and the script (app/levelScroll.js), '
+             'tools/matchlevels.mjs measures it against the original\'s memory',
         map=dict(base='$%04X' % MAP, rows=MAP_ROWS, stride=MAP_STRIDE, start='$%04X' % START,
                  unpacker='$162F', blockTable='$%04X/$%04X' % (BLOCK_LO, BLOCK_HI), firstScreen='$11A2',
                  scroll=dict(step='$34FB', counter='$36A8', reload=2, fine='$020C', pointer='$0201/$0202',
@@ -234,7 +234,7 @@ def main():
         tables={k: '$%04X' % v for k, v in TABLES.items()},
         levels=levels)
     os.makedirs(os.path.dirname(os.path.abspath(a.o)), exist_ok=True)
-    json.dump(out, open(a.o, 'w'), indent=1, ensure_ascii=False)
+    rtlib.save_json(out, a.o, drop=('unpacker', 'blockTable', 'flagTable', 'tables', 'clears', 'starTables', 'unless', 'initPatches', 'who', 'tableAddr', 'mapSrc'), indent=1, ensure_ascii=False)   # without the notes (rtlib.strip_notes)
     for d in levels:
         print('level %d: init %s hook %s step %s end %s (%s columns), %d records, %d blocks%s'
               % (d['level'], d['init'], d['irqHook'], d['step'], d['end'], d['columns'],

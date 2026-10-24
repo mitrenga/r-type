@@ -47,7 +47,8 @@ for (const f of readdirSync(dir).filter(f => f.endsWith('.json')).sort((a, b) =>
   // shift) is what memory held row by row — the worker's memory is one moment, so it is not compared
   const inScreen = (w) => { const a = parseInt(w.addr, 16); return (a >= 0xCC00 && a < 0xCEF8) || (a >= 0xD800 && a < 0xDAF8); };
   if (d.writes.some(inScreen)) { skipped++; if (verbose) console.log(`${f.padEnd(12)} stores into the screen during the frame, skipped`); continue; }
-  const level = /úroveň (\d)/.exec(d.source || '') ? +/úroveň (\d)/.exec(d.source)[1] : 1;
+  // frames recorded before the tools went English still say `úroveň N` in `source`; both forms are read
+  const level = /(?:úroveň|level) (\d)/.exec(d.source || '') ? +/(?:úroveň|level) (\d)/.exec(d.source)[1] : 1;
   const sl = new ScreenLoader(d);
   const ref = sl.build();
   const bank = sl.bank;

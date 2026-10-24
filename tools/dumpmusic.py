@@ -106,10 +106,10 @@ def main():
     core = rtlib.core_files()
     m1 = rtlib.image(1, core=core)
     out = dict(
-        source='R-Type, kazeta Electric Dreams (soubor M každé úrovně); tools/dumpmusic.py',
-        note='paměť přehrávače SID na adresách originálu: proměnné $637F-$6475, kód $6476-$6D3F (ve všech úrovních stejný; '
-             'tabulky kmitočtů $6C72/$6CD2, průběhy příkazů $6D31) a skladba od $6D40 (tabulka 22 relativních ukazatelů, '
-             '$637C z ní dělá absolutní na $6388); app/sidPlayer.js v ní má proměnné, tools/matchsound.mjs ji srovnává',
+        source='R-Type, Electric Dreams tape (file M of each level); tools/dumpmusic.py',
+        note='the SID player\'s memory at the original\'s addresses: variables $637F-$6475, code $6476-$6D3F (the same in every level; '
+             'frequency tables $6C72/$6CD2, command waveforms $6D31) and the song from $6D40 (a table of 22 relative pointers, '
+             '$637C makes them absolute at $6388); app/sidPlayer.js keeps its variables in it, tools/matchsound.mjs compares it',
         region='$%04X-$%04X' % (REGION[0], REGION[1]-1), code='$%04X-$%04X' % (CODE[0], CODE[1]-1),
         variables=VARIABLES, pointers=POINTERS, tableArg='$%04X' % TABLE_ARG,
         sidSites=['$647D', '$6480', '$6483', '$648A', '$65DB', '$65E6', '$65EC', '$65F5', '$6955', '$695B', '$6961', '$6967',
@@ -139,7 +139,7 @@ def main():
         print('level %d: M to $%04X, code same as level 1: %s, song differs from %s; tunes %s'
               % (n, 0x6370 + len(files['M']), same_code, ('$%04X' % first_diff) if first_diff is not None else '-',
                  ' '.join('%d:%d..%d/%d sp%d' % (t, v['start'], v['loop'], v['end'], v['speed']) for t, v in tunes.items())))
-    json.dump(out, open(a.o, 'w'), indent=None, separators=(',', ':'), ensure_ascii=False)
+    rtlib.save_json(out, a.o, drop=('region', 'variables', 'tableArg', 'sidSites', 'fileEnd', 'tuneTable', 'songDiffersFrom', 'player'), indent=None, separators=(',', ':'), ensure_ascii=False)   # without the notes (rtlib.strip_notes)
     print('8 levels, $%04X-$%04X each -> %s (%d KB)' % (REGION[0], REGION[1]-1, a.o, os.path.getsize(a.o)//1024))
 
 

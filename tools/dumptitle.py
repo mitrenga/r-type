@@ -41,8 +41,8 @@ def main():
     used = sorted({c for r in rows for c in r})
     empty = [c for c in range(CHARSET_PAGES*32) if not any(charset[c*8:c*8+8])]
     out = dict(
-        source='R-Type, kazeta Electric Dreams, strana A, jádro M (titulka $8000); tools/dumptitle.py',
-        note='logo titulky: 7 x 39 screen codes (sloupce 1-39) do vlastní sady $85CB -> $C000 (6 stránek), multicolour $D016 = $18, Color RAM $09 (bílá), $D022 = 3, $D023 = 11, pozadí 0',
+        source='R-Type, Electric Dreams tape, side A, core M (title screen $8000); tools/dumptitle.py',
+        note='the title logo: 7 x 39 screen codes (columns 1-39) in its own set $85CB -> $C000 (6 pages), multicolour $D016 = $18, Color RAM $09 (white), $D022 = 3, $D023 = 11, background 0',
         charset=dict(addr='$%04X' % CHARSET, shown='$C000', pages=CHARSET_PAGES, bytes=charset),
         logo=dict(addrs=['$%04X' % at for at in LOGO_ROWS], shownRows='4-10, then 11-17 ($811B)', column=1, width=39, height=len(LOGO_ROWS), codes=rows,
                   color=9, codesUsed=used, emptyCodes=empty[:8]),
@@ -50,7 +50,7 @@ def main():
         sprite=dict(addr='$%04X' % SPRITE[0], length=SPRITE[1], block=0x2F, multicolor=True, colors={'$D027': 1, '$D025': 3, '$D026': 0x0B},
                     bytes=list(m[SPRITE[0]:SPRITE[0]+SPRITE[1]]), what='$81A1: the sprite that flies over the logo'),
     )
-    json.dump(out, open(a.o, 'w'), indent=1, ensure_ascii=False)
+    rtlib.save_json(out, a.o, drop=('shown', 'addrs', 'shownRows'), indent=1, ensure_ascii=False)   # without the notes (rtlib.strip_notes)
     print('logo %d x %d, codes used %d (%s..%s), empty codes %s -> %s' % (39, len(rows), len(used), hex(used[0]), hex(used[-1]), [hex(c) for c in empty[:4]], a.o))
 
 

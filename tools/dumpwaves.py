@@ -95,12 +95,12 @@ def main():
         print('level %d: wave table $%04X-$%04X, %d entries, %d launches, end type $%02X, resume at entry %s'
               % (n, start, end, len(entries), launches, entries[-1][1], d['table']['resumeIndex']))
     out = dict(
-        source='R-Type, kazeta Electric Dreams (soubor M každé úrovně); tools/dumpwaves.py',
-        note='dvojice (sloupec = dolní bajt $0201, typ); typ < $80 spouští nepřítele ($505E), $FF/$FE mění $0235, '
-             '$80-$FA končí tabulku a jde do $56CF (objekt na konci úrovně); 14 tabulek po 62 typech na pevných adresách v M',
+        source='R-Type, Electric Dreams tape (file M of each level); tools/dumpwaves.py',
+        note='pairs (column = low byte of $0201, type); type < $80 launches an enemy ($505E), $FF/$FE change $0235, '
+             '$80-$FA end the table and go to $56CF (the object at the end of the level); 14 tables of 62 types at fixed addresses in M',
         spawner='$4FA8', startPointer='$%04X' % START_PTR, resumePointer='$%04X' % RESUME_PTR, types=TYPES,
         levels=levels)
-    json.dump(out, open(a.o, 'w'), indent=1, ensure_ascii=False)
+    rtlib.save_json(out, a.o, drop=('startPointer', 'resumePointer', 'reader', 'ptr7C', 'ptr7E', 'ptr80'), indent=1, ensure_ascii=False)   # without the notes (rtlib.strip_notes)
     print('->', a.o)
 
 

@@ -83,25 +83,25 @@ def main():
         # the previous level left at $E500-$E7FF (multiload) — not its data
         in_file = min(0x800, len(rtlib.level_files(n)['S']))
         levels.append(dict(level=n, lowerInFile=in_file, init=init['who'] if init else None,
-                           upper=dict(addr='$%04X' % UPPER, source='$86AC (G) + $8C53 (M strany A)', glyphs=256,
+                           upper=dict(addr='$%04X' % UPPER, source='$86AC (G) + $8C53 (side A\'s M)', glyphs=256,
                                       nonEmpty=glyph_count(upper), bytes=list(upper)),
                            lower=dict(addr='$%04X' % LOWER, source='$E000 (S)', glyphs=256,
                                       nonEmpty=glyph_count(lower), bytes=list(lower))))
         print('level %d: upper %d glyphs, lower %d glyphs' % (n, glyph_count(upper), glyph_count(lower)))
     out = dict(
-        source='R-Type, kazeta Electric Dreams; tools/dumpcharset.py (obraz paměti z kazety, kopie jako $1794/$11FA)',
-        note='tři sady v pásmech: horní plocha $C000 ($D018 $30), dolní plocha od rastru 140 $E000 ($38), panel od 202 $C800 ($32)',
+        source='R-Type, Electric Dreams tape; tools/dumpcharset.py (memory image from the tape, copies as $1794/$11FA)',
+        note='three sets in bands: upper playfield $C000 ($D018 $30), lower playfield from raster 140 $E000 ($38), panel from 202 $C800 ($32)',
         runtime=[dict(glyphs='$AF-$BF', sets=['upper', 'lower'],
-                      who='$1254 maže (136 B na $8C24 a $E578), $127E (úroveň 1) a $1385 (úroveň 4) sázejí bity, '
-                          '$940A/$945C (kód úrovně 1 v G, čte $DC04) hýbe hvězdami každý snímek'),
+                      who='$1254 clears (136 B at $8C24 and $E578), $127E (level 1) and $1385 (level 4) seed bits, '
+                          '$940A/$945C (level 1 code in G, reads $DC04) moves the stars every frame'),
                  dict(glyphs='$FC-$FF', sets=['panel'],
-                      who='$CBE1-$CBFF leží za koncem souboru M strany A ($A134): obsah RAM, ne data')],
-        panel=dict(addr='$%04X' % PANEL, source='$9D53 (M strany A, $17D3)', glyphs=256,
+                      who='$CBE1-$CBFF lies past the end of side A\'s file M ($A134): RAM contents, not data')],
+        panel=dict(addr='$%04X' % PANEL, source='$9D53 (side A\'s M, $17D3)', glyphs=256,
                    nonEmpty=glyph_count(panel), fileEnd='$A134', bytes=list(panel)),
-        shared=dict(addr='$%04X' % SHARED, source='$8C53 (M strany A, $17D3)', glyphs=64, codes='$C0-$FF',
+        shared=dict(addr='$%04X' % SHARED, source='$8C53 (side A\'s M, $17D3)', glyphs=64, codes='$C0-$FF',
                     nonEmpty=glyph_count(shared), bytes=list(shared)),
         levels=levels)
-    json.dump(out, open(a.o, 'w'), indent=0, ensure_ascii=False)
+    rtlib.save_json(out, a.o, drop=('source', 'who', 'fileEnd'), indent=0, ensure_ascii=False)   # without the notes (rtlib.strip_notes)
     print('panel %d glyphs, shared %d glyphs -> %s' % (glyph_count(panel), glyph_count(shared), a.o))
 
 

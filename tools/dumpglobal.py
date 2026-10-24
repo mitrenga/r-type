@@ -72,11 +72,11 @@ def main():
             values = list(m[at:at+n])
         tables.append(dict(addr='$%04X' % at, length=n, kind=kind, reader=reader, what=what, values=values))
     out = dict(
-        source='R-Type, kazeta Electric Dreams (jádro G strany A); tools/dumpglobal.py',
-        note='tabulky jádra po úrovních a konstanty s místem v kódu; scroll měří tools/matchlevels.mjs',
+        source='R-Type, Electric Dreams tape (core G of side A); tools/dumpglobal.py',
+        note='the core\'s per-level tables and constants with their place in the code; tools/matchlevels.mjs measures the scroll',
         tables=tables,
         constants={name: dict(value=value, where=where) for name, value, where in CONSTANTS})
-    json.dump(out, open(a.o, 'w'), indent=1, ensure_ascii=False)
+    rtlib.save_json(out, a.o, drop=('reader', 'playfield'), indent=1, ensure_ascii=False)   # without the notes (rtlib.strip_notes)
     for t in tables:
         print('%s %-16s %s' % (t['addr'], t['reader'], t['values'] if t['kind'] == 'words' or t['length'] <= 8 else '%d B' % t['length']))
     print('->', a.o)
