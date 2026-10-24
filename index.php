@@ -5,7 +5,6 @@
   $appOpenGraph = [
     'image' => 'images/poster.png',
   ];
-  $devMode = true;                       // overridden by config/config.php on the server
   if (file_exists(__DIR__.'/config/config.php')) {
     require_once __DIR__.'/config/config.php';
   }
