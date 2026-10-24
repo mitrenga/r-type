@@ -30,7 +30,7 @@ Supported:
 
 
 ## Play now
-Not deployed yet — the public release is the next milestone (M7).
+https://r-type.remake.free
 
 
 ## Controls
@@ -46,38 +46,6 @@ flies, one button fires and another handles the Force; on a touchscreen one
 half of the picture is the stick and the other half fire, with a Force
 button — the sides can be swapped in SETTINGS.
 
-
-## How it is made
-Nothing is redrawn or guessed. The levels, character sets, sprites, waves,
-texts, the ship's tables, the enemy code and the music are extracted from
-the original tape by the tools in `tools/`, and the game itself is the
-original's code rewritten in JavaScript routine by routine, with its
-variables at the original's addresses in a 64 KB `ram`. It runs in a web
-worker at the 50 Hz of a PAL C64; the fine horizontal scroll, the three
-character sets in raster bands and the sprite multiplexer are composed the
-way the VIC-II composes them, and the chip's limits — eight sprites, the
-multiplexer under load — are kept, not cleaned up.
-
-Every part is checked by a `match*` tool against the running original
-(VICE, driven by batch monitor scripts), and a milestone counts as done only
-when the tool reports zero differences:
-
-| what | tool | result |
-|---|---|---|
-| a frame of level 1 composed from the chip's memory and registers | `tools/matchscreen.mjs` | 23 frames, 1 472 000 pixels / 0 differences |
-| all eight levels built and scrolled by the original's code | `tools/matchlevels.mjs` | 783 samples, 1 407 655 checks / 0 |
-| character sets and sprites, byte for byte | `tools/matchcharset.mjs`, `tools/matchsprites.mjs` | 42 824 / 0, 49 696 / 0 |
-| the ship, the Force, the weapons, death — frame by frame | `tools/matchship.mjs` | 17 recordings, 37 064 000 checks / 0 |
-| enemies, waves, multiplexer and bosses | `tools/matchenemies.mjs` | 32 recordings, 1 433 643 140 checks; 19 recordings at 0, the rest open (long immortal flights, see `MILNIKY.md`) |
-| whole games: READY, checkpoints, GAME OVER, the end | `tools/matchrules.mjs` | 24 games, 891 376 187 checks; events of all 24 match, RAM at 0 in 12 |
-| sound: every write to the SID, in order | `tools/matchsound.mjs` | 24 recordings, 3 286 520 writes, 14 701 377 checks / 0 |
-
-`tools/regress.mjs` keeps a fingerprint of a scripted game, SID writes
-included, so a change anywhere shows up. The tools are `dump*.py` (the tape
-→ `data/`), `trace*.py` (the original recorded in VICE) and `match*.mjs`
-(the remake replayed against the recording); the milestones are in
-`MILNIKY.md` and the specification in `ZADANI.md` (both in Czech, kept
-outside this repository with the working notes).
 
 
 ## Requirements
