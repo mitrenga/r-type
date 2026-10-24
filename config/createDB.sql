@@ -1,4 +1,4 @@
-SET @dbname = 'rtype';
+SET @dbname = 'r-type';
 
 SET @query = CONCAT('CREATE DATABASE IF NOT EXISTS `', @dbname, '`');
 PREPARE stmt FROM @query;
