@@ -35,6 +35,8 @@ export class MenuModel extends AbstractModel {
     super(app);
     this.id = 'MenuModel';
     this.menuEntity = null;
+    /** a newer version on the server (`db/version.php`): the ABOUT row reads UPGRADE ! and upgrades (Manic Miner's way) */
+    this.newVersionAvailable = false;
     this.menuItems = [
       {t1: 'START GAME', event: {id: 'startGame'}},
       {t1: 'PLAYER NAME', event: {id: 'setPlayerName'}},
@@ -97,7 +99,33 @@ export class MenuModel extends AbstractModel {
     // the last one left in it (Impossible Mission, R-044)
     this.sendEvent(0, {id: 'closeAllAudioBuses'});
     this.handleAppData();
+    this.checkServerVersion();
   } // init
+
+  /**
+   * Asks the server for its version (`db/version.php`, the version in
+   * `app/version.js` there); a different one turns the ABOUT row into
+   * UPGRADE ! — the siblings (Manic Miner, Booty) have a separate button for
+   * it, here the version is the value of the ABOUT row. A dedicated receiver,
+   * so the request does not clash with the application's `appData.db` fetch
+   * (one `fetchDataId` and `setData` per receiver).
+   */
+  checkServerVersion() {
+    if (!navigator.onLine) { return; }
+    var receiver = {
+      id: this.id+'Version',
+      fetchDataId: '',
+      setData: (data) => {
+        var version = data && data.data && data.data.version;
+        if (version && version !== 'unknown' && version !== this.app.version) {
+          this.newVersionAvailable = true;
+          if (this.menuEntity) { this.menuEntity.refreshMenu(); }
+        }
+      },
+      errorData: () => {}
+    };
+    receiver.fetchDataId = this.app.fetchData('version.db', false, {}, receiver);
+  } // checkServerVersion
 
   /**
    * What the menu asks about its rows.
@@ -110,8 +138,17 @@ export class MenuModel extends AbstractModel {
     switch (key) {
       case 'numberOfItems':
         return self.menuItems.length;
+      case 't1':
+        // a newer version on the server: the ABOUT row is the UPGRADE ! button
+        if (self.menuItems[row].event.id === 'showAbout' && self.newVersionAvailable) { return 'UPGRADE !'; }
+        return self.menuItems[row].t1;
+      case 'penColor':
+        return self.menuItems[row].event.id === 'showAbout' && self.newVersionAvailable ? C64Color.color(2) : false;
       case 't2':
         switch (self.menuItems[row].event.id) {
+          case 'showAbout':
+            // the version as the row's value; nothing while the row reads UPGRADE !
+            return self.newVersionAvailable ? '' : 'v'+self.app.version;
           case 'setPlayerName':
             return self.app.playerName || '';
           case 'setSounds':
@@ -232,7 +269,13 @@ export class MenuModel extends AbstractModel {
         this.app.setModel('LoadingPictureModel');
         return true;
       case 'showAbout':
-        this.app.setModel('AboutModel');
+        // the row reads UPGRADE ! — the new version instead of the about screen (`AbstractApp.upgradeApp`)
+        if (this.newVersionAvailable) {
+          this.app.upgradeApp();
+        }
+        else {
+          this.app.setModel('AboutModel');
+        }
         return true;
     }
     return false;
