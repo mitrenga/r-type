@@ -49,6 +49,13 @@ class AboutPage extends AbstractAboutPage {
             'just open the page and play, free of charge. The game supports keyboard, touch controls and '.
             'gamepads.</p>'.$this->installNote(),
         ],
+        [
+          'heading' => 'Other games',
+          'html' =>
+            '<p>Also try the ZX Spectrum remakes on the same library: <a href="https://manicminer.remake.free/" target="_blank" rel="noopener">Manic Miner</a>, '.
+            '<a href="https://jetsetwilly.remake.free/" target="_blank" rel="noopener">Jet Set Willy</a> and '.
+            '<a href="https://booty.remake.free/" target="_blank" rel="noopener">Booty</a> — all playable in your browser as well.</p>',
+        ],
       ],
       'links' => [
         ['label' => 'R-Type on Wikipedia', 'url' => 'https://en.wikipedia.org/wiki/R-Type'],
