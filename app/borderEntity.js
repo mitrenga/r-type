@@ -1,12 +1,16 @@
 const { AbstractEntity } = await import('./svision/js/abstractEntity.js?ver='+window.srcVersion);
 const { ButtonEntity } = await import('./svision/js/platform/canvas2D/buttonEntity.js?ver='+window.srcVersion);
+const { SpriteEntity } = await import('./svision/js/platform/canvas2D/spriteEntity.js?ver='+window.srcVersion);
+const { SpriteTool } = await import('./svision/js/spriteTool.js?ver='+window.srcVersion);
 const { TextEntity } = await import('./svision/js/platform/canvas2D/textEntity.js?ver='+window.srcVersion);
 const { C64Color } = await import('./svision/js/platform/canvas2D/c64/c64Color.js?ver='+window.srcVersion);
 // begin code
 
 /**
  * The border of the television around the 320x200 picture: the cross that
- * opens the pause panel, the frame counter and the developer-mode banner.
+ * opens the pause panel, the two halves of the touchscreen with their icons
+ * (the stick and the fire button, as `manicminer`, `jetsetwilly` and `booty`
+ * have them), the frame counter and the developer-mode banner.
  * Its colour is `$D020`, which the models set — ★ R-Type keeps it black in
  * the game (the frame of level 1, `data/screen.json`), and inside the
  * picture the 38-column window paints the same `$D020` over the edges of the
@@ -23,15 +27,32 @@ export class BorderEntity extends AbstractEntity {
 
   /**
    * @param {boolean} enableExit - Whether the cross is in the border.
+   * @param {boolean} enableGameControls - Whether the two halves of the
+   *        touchscreen are there (`controls.touchscreen.supported`).
    */
-  constructor(enableExit) {
+  constructor(enableExit, enableGameControls) {
     super(null, 0, 0, 0, 0, false, false);
     this.id = 'BorderEntity';
 
     this.enableExit = enableExit;
+    this.enableGameControls = !!enableGameControls;
     this.escapeEntity = null;
     this.escapeScale = 2;
+    /**
+     * The two halves of the whole television (border included): the model
+     * binds a touch to the one it landed on, so that the input manager keeps
+     * sending `keyMove` for it — ★ a touch bound to nothing gets no moves at
+     * all (`InputEventsManager.eventTouchMove`), and a stick without moves
+     * never leaves its centre.
+     */
+    this.leftControlEntity = null;
+    this.rightControlEntity = null;
+    /** an icon of what each half does, drawn **in the border only**, never over the picture */
+    this.leftIconEntity = null;
+    this.rightIconEntity = null;
+    this.gameControlIcons = false;
     this.devModeNameEntity = null;
+    this.fpsEntity = null;
   } // constructor
 
   init() {
@@ -46,6 +67,20 @@ export class BorderEntity extends AbstractEntity {
         {id: 'keyPress', key: 'Escape'}, [], false, false,
         {scale: this.escapeScale, clickColor: '#7a7a7aff'});
       this.addEntity(this.escapeEntity);
+    }
+
+    if (this.enableGameControls) {
+      this.leftControlEntity = new AbstractEntity(this, 0, 0, 0, 0, false, false);
+      this.addEntity(this.leftControlEntity);
+      this.rightControlEntity = new AbstractEntity(this, 0, 0, 0, 0, false, false);
+      this.addEntity(this.rightControlEntity);
+
+      this.leftIconEntity = new SpriteEntity(this, 0, 0, C64Color.color(1), false, 0, 0);
+      this.leftIconEntity.hide = true;
+      this.addEntity(this.leftIconEntity);
+      this.rightIconEntity = new SpriteEntity(this, 0, 0, C64Color.color(1), false, 0, 0);
+      this.rightIconEntity.hide = true;
+      this.addEntity(this.rightIconEntity);
     }
 
     // ★ **The frame counter belongs in the border, not in the picture.** The
@@ -92,9 +127,68 @@ export class BorderEntity extends AbstractEntity {
       if (this.escapeEntity.penColor !== penColor) {
         this.escapeEntity.setPenColor(penColor);
       }
+      // the icons the same way: legible on whatever `$D020` is
+      [this.leftIconEntity, this.rightIconEntity].forEach((icon) => {
+        if (icon && icon.penColor !== penColor) { icon.setPenColor(penColor); }
+      });
     }
     this.drawSubEntities();
   } // drawEntity
+
+  /**
+   * The touch-control icons of the two halves of the screen
+   * (`controlsOptions.touchscreen.icons`, `GameModel.showTouchIcons`).
+   * @param {Object|false} left - The left half's icon.
+   * @param {Object|false} right - The right half's icon.
+   */
+  setGameControlIcons(left, right) {
+    if (!this.enableGameControls) { return; }
+    this.gameControlIcons = !!(left && right);
+    [{entity: this.leftIconEntity, icon: left},
+     {entity: this.rightIconEntity, icon: right}].forEach((item) => {
+      if (item.icon) {
+        item.entity.setGraphicsData('compressedSpriteData' in item.icon
+                                    ? SpriteTool.decode(item.icon.compressedSpriteData)
+                                    : item.icon);
+      }
+    });
+    this.layoutGameControlIcons();
+  } // setGameControlIcons
+
+  /**
+   * Places the icons in the border, as `booty` does: when the side border is
+   * wide enough (a phone on its side), each goes beside its half; when the
+   * bottom one is tall enough (a phone upright), both go under the picture.
+   * Otherwise they are not drawn — never over the game.
+   */
+  layoutGameControlIcons() {
+    if (!this.enableGameControls || !this.leftIconEntity || this.model == null) { return; }
+    var icons = [this.leftIconEntity, this.rightIconEntity];
+    if (!this.gameControlIcons || icons.some((icon) => icon.width == 0)) {
+      icons.forEach((icon) => { icon.hide = true; });
+      return;
+    }
+    var margin = 2;
+    var beside = Math.max(...icons.map((icon) => icon.width))+2*margin;
+    var below = Math.max(...icons.map((icon) => icon.height))+2*margin;
+    if (this.model.borderWidth >= beside) {
+      icons.forEach((icon, i) => {
+        icon.x = (i == 0 ? 0 : this.width-this.model.borderWidth)
+                 +Math.floor((this.model.borderWidth-icon.width)/2);
+        icon.y = Math.floor((this.height-icon.height)/2);
+        icon.hide = false;
+      });
+    } else if (this.model.borderHeight >= below) {
+      var top = this.height-this.model.borderHeight;
+      icons.forEach((icon, i) => {
+        icon.x = Math.floor(this.width*(1+2*i)/4-icon.width/2);
+        icon.y = top+Math.floor((this.model.borderHeight-icon.height)/2);
+        icon.hide = false;
+      });
+    } else {
+      icons.forEach((icon) => { icon.hide = true; });
+    }
+  } // layoutGameControlIcons
 
   /**
    * What the dev-mode indicator says: how many frames a second the model
@@ -138,6 +232,18 @@ export class BorderEntity extends AbstractEntity {
             this.escapeEntity.x = this.model.borderWidth+this.model.desktopEntity.width-this.escapeScale*8;
             this.escapeEntity.y = this.model.borderHeight-this.escapeScale*8;
           }
+        }
+        if (this.enableGameControls) {
+          var w = Math.floor(this.width/2);
+          this.leftControlEntity.x = 0;
+          this.leftControlEntity.y = 0;
+          this.leftControlEntity.width = w;
+          this.leftControlEntity.height = this.height;
+          this.rightControlEntity.x = this.width-w;
+          this.rightControlEntity.y = 0;
+          this.rightControlEntity.width = w;
+          this.rightControlEntity.height = this.height;
+          this.layoutGameControlIcons();
         }
         if (this.fpsEntity) {
           // bottom left in the border, under the picture; at the top when there is no room below

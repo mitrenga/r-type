@@ -85,7 +85,7 @@ export class GameModel extends AbstractModel {
   static get STICK_DEAD() { return 6; }
 
   newBorderEntity() {
-    return new BorderEntity(true);
+    return new BorderEntity(true, this.app.controls.touchscreen.supported);
   } // newBorderEntity
 
   init() {
@@ -98,6 +98,7 @@ export class GameModel extends AbstractModel {
     this.desktopEntity.bkColor = C64Color.color(0);
     if (this.borderEntity != null) {
       this.borderEntity.bkColor = C64Color.color(0);
+      this.showTouchIcons();
     }
     this.handleAppData();
   } // init
@@ -307,7 +308,12 @@ export class GameModel extends AbstractModel {
     var w = this.desktopEntity.width, h = this.desktopEntity.height;
     var x = event.x-this.borderWidth, y = event.y-this.borderHeight;
     if (event.id === 'keyPress') {
-      var stickSide = (this.app.controls.touchscreen.type === 'leftButton') ? (x >= w/2) : (x < w/2);
+      // ★ the touch is bound to its half of the television: the input manager sends `keyMove` only for
+      // a touch bound to an entity (`InputEventsManager.eventTouchMove`) — without this the stick never moved
+      var left = x < w/2;
+      var half = this.borderEntity && (left ? this.borderEntity.leftControlEntity : this.borderEntity.rightControlEntity);
+      this.app.inputEventsManager.touchesMap[event.identifier] = half || this.desktopEntity;
+      var stickSide = (this.app.controls.touchscreen.type === 'leftButton') ? !left : left;
       if (stickSide) {
         this.stick = {id: event.identifier, x0: x, y0: y, x: x, y: y};
       } else if (y < h/4) {
@@ -324,6 +330,18 @@ export class GameModel extends AbstractModel {
     }
     this.pushInput();
   } // touch
+
+  /**
+   * The icons of the two halves into the border (`controlsOptions.touchscreen.icons`
+   * by the `sprite` of each half of the chosen `type`), as the siblings have
+   * them; the border draws them only where there is room outside the picture.
+   */
+  showTouchIcons() {
+    if (!this.app.controls.touchscreen.supported || !this.borderEntity || !this.borderEntity.setGameControlIcons) { return; }
+    var ts = this.app.controlsOptions.touchscreen;
+    var halves = ts.types[this.app.controls.touchscreen.type] || ts.types[ts.types.keys[0]];
+    this.borderEntity.setGameControlIcons(ts.icons[halves.left.sprite], ts.icons[halves.right.sprite]);
+  } // showTouchIcons
 
   handleEvent(event) {
     if (super.handleEvent(event)) {
