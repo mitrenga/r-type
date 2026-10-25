@@ -301,7 +301,8 @@ export class GameModel extends AbstractModel {
    * ★ The touchscreen: one half of the picture is a stick — where the
    * finger went down is the centre, and moving it away pushes the stick;
    * the other half is fire, its top quarter the space bar. The stick is on
-   * the left unless SETTINGS says `leftButton` (`app.controls.touchscreen`).
+   * the right (as the siblings have it) unless SETTINGS says `rightButton`
+   * (`app.controls.touchscreen`).
    * @param {Object} event - A `Touch` event with `x`, `y` and `identifier`.
    */
   touch(event) {
@@ -313,7 +314,7 @@ export class GameModel extends AbstractModel {
       var left = x < w/2;
       var half = this.borderEntity && (left ? this.borderEntity.leftControlEntity : this.borderEntity.rightControlEntity);
       this.app.inputEventsManager.touchesMap[event.identifier] = half || this.desktopEntity;
-      var stickSide = (this.app.controls.touchscreen.type === 'leftButton') ? !left : left;
+      var stickSide = (this.app.controls.touchscreen.type === 'rightButton') ? left : !left;
       if (stickSide) {
         this.stick = {id: event.identifier, x0: x, y0: y, x: x, y: y};
       } else if (y < h/4) {

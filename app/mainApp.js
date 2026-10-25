@@ -115,7 +115,8 @@ export class MainApp extends AbstractApp {
      * Dash): the keyboard actions the game reads (`GameModel.joystickOf`,
      * `pushInput`), the gamepad's event names, and the touchscreen — the
      * stick is one half of the picture, fire (with the Force's space bar in
-     * its top quarter) the other; which half is which is the choice here.
+     * its top quarter) the other; which half is which is the choice here —
+     * the stick on the right by default, as the siblings have it.
      */
     this.controlsOptions = {
       keyboard: {
@@ -145,14 +146,16 @@ export class MainApp extends AbstractApp {
       touchscreen: {
         device: 'touchscreen',
         types: {
-          keys: ['rightButton', 'leftButton'],
-          rightButton: {
-            left: {half: 'stick', sprite: 'stick'},
-            right: {half: 'button', sprite: 'button'}
-          },
+          // ★ the default is the button on the left and the stick on the right, as Manic Miner, Jet Set
+          // Willy and Booty have it; the first key is also the fallback for a broken cookie
+          keys: ['leftButton', 'rightButton'],
           leftButton: {
             left: {half: 'button', sprite: 'button'},
             right: {half: 'stick', sprite: 'stick'}
+          },
+          rightButton: {
+            left: {half: 'stick', sprite: 'stick'},
+            right: {half: 'button', sprite: 'button'}
           }
         },
         icons: {
@@ -309,7 +312,7 @@ export class MainApp extends AbstractApp {
         result = {left: 'ArrowLeft', right: 'ArrowRight', up: 'ArrowUp', down: 'ArrowDown', fire: ' ', force: 'S'};
         break;
       case 'touchscreen':
-        result = {supported: false, type: 'rightButton'};
+        result = {supported: false, type: 'leftButton'};
         break;
       case 'gamepads':
         result = {supported: false, devices: {}};
