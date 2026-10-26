@@ -3,3 +3,7 @@
   $dbName = 'r-type';
   $dbUser = 'your-user-name';
   $dbPassword = 'your-password';
+
+  // used by the statistics page (~/sw/stats), ignored by the game itself
+  $gameName = 'R-Type';
+  $hallOfFameTable = 'rg_rt_hallOfFame';
