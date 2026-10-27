@@ -52,9 +52,10 @@ class AboutPage extends AbstractAboutPage {
         [
           'heading' => 'Other games',
           'html' =>
-            '<p>Also try the ZX Spectrum remakes on the same library: <a href="https://manicminer.remake.free/" target="_blank" rel="noopener">Manic Miner</a>, '.
-            '<a href="https://jetsetwilly.remake.free/" target="_blank" rel="noopener">Jet Set Willy</a> and '.
-            '<a href="https://booty.remake.free/" target="_blank" rel="noopener">Booty</a> — all playable in your browser as well.</p>',
+            '<p>This remake is one of a growing collection of classic games from the 8-bit and 16-bit era '.
+            '— ZX Spectrum, Commodore 64, arcade and more — rebuilt faithfully on the same library and '.
+            'playable in your browser, free of charge. Browse the whole collection at '.
+            '<a href="https://retrogames.free/" target="_blank" rel="noopener">retrogames.free</a>.</p>',
         ],
       ],
       'links' => [
