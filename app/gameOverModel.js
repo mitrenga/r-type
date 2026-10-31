@@ -213,7 +213,6 @@ export class HallOfFameEntity extends AbstractEntity {
   showOfflineNotice() {
     if (!this.options.table) { this.showScoreLine(); }
     this.addEntity(new TextEntity(this, this.font, 0, this.top+24, this.width, 8, 'SYSTEM OFFLINE', C64Color.color(2), false, {align: 'center'}));
-    this.addEntity(new TextEntity(this, this.font, 0, this.top+40, this.width, 8, 'SCORES UNAVAILABLE', C64Color.color(2), false, {align: 'center'}));
   } // showOfflineNotice
 
   /**
