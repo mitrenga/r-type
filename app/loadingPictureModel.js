@@ -33,11 +33,13 @@ export class LoadingPictureModel extends AbstractModel {
 
   /** The data arrived after the model opened (the application calls this again then). */
   handleAppData() {
-    if (this.pictureEntity && !this.pictureEntity.picture) {
-      var picture = this.loadDataFile('picture');
-      if (picture) {
-        this.pictureEntity.setPicture(picture);
-      }
+    if (this.pictureEntity && !this.pictureEntity.picture && !this.app.appDataPending()) {
+      // from localStorage at once, or from the server when it is missing there (R-062)
+      this.loadDataFiles(['picture'], (files) => {
+        if (files && files.picture && this.app.model === this && !this.pictureEntity.picture) {
+          this.pictureEntity.setPicture(files.picture);
+        }
+      });
     }
   } // handleAppData
 

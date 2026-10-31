@@ -89,11 +89,15 @@ export class AboutModel extends AbstractModel {
     if (!am || this.tunePlayed) { return; }
     if (!am.sample.title) {
       if (!this.tuneAsked && this.app.worker) {
-        var music = this.loadDataFile('music');
-        if (music) {
-          this.tuneAsked = true;
-          this.app.worker.postMessage({message: 'sample', kind: 'title', music: music});
-        }
+        // from localStorage at once, or from the server when it is missing there (R-062)
+        this.tuneAsked = true;
+        this.loadDataFiles(['music'], (files) => {
+          if (files && files.music && this.app.model === this) {
+            this.app.worker.postMessage({message: 'sample', kind: 'title', music: files.music});
+          } else {
+            this.tuneAsked = false;
+          }
+        });
       }
     }
     // the bus is opened at once — its worklet loads meanwhile; the tune starts when both the bus and the

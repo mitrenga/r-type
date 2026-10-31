@@ -25,8 +25,12 @@ export class VolumeModel extends DialogScreenModel {
   init() {
     super.init();
     // the samples may still be missing (the menu asks for them; the data may have come late): ask here too
-    if (this.app.audioManager) {
-      this.app.audioManager.askSamples(this.loadDataFile('music'));
+    if (this.app.audioManager && !this.app.appDataPending()) {
+      this.loadDataFiles(['music'], (files) => {
+        if (files && this.app.model === this) {
+          this.app.audioManager.askSamples(files.music);
+        }
+      });
     }
   } // init
 

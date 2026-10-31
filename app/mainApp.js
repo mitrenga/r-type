@@ -383,11 +383,14 @@ export class MainApp extends AbstractApp {
    */
   setData(data) {
     var sections = (data && data.data) || {};
+    var files = {};
     Object.keys(sections).forEach((key) => {
       if (key !== 'hiScore' && sections[key] !== null) {
-        this.saveDataToStorage(key, sections[key]);
+        files[key] = sections[key];
       }
     });
+    // a full localStorage is cleared and tried once more (R-062)
+    this.saveAppDataToStorage(files);
     if (sections.title) {
       // the original's font is built from the title's character set
       this.fonts.rtype.build(sections.title);

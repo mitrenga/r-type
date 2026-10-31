@@ -87,7 +87,6 @@ export class MenuModel extends AbstractModel {
     // (`data/title.json`, `tools/dumptitle.py`), multicolour as the title sets the VIC ($D016 = $18, $D022 = 3,
     // $D023 = 11, Colour RAM $09); the rest of the text screen is empty (code 0 is an empty glyph of that set)
     this.logoEntity = null;
-    this.showLogo(this.loadDataFile('title'));
     // seven rows of 16 px under the logo of the 320 × 200 picture, the values (name, volumes) in the right column
     this.menuEntity = new MenuEntity(this.desktopEntity, 40, 62, 240, this.menuItems.length*16, this.desktopEntity.bkColor, this.menuOptions, this, this.getMenuData);
     this.desktopEntity.addEntity(this.menuEntity);
@@ -203,11 +202,17 @@ export class MenuModel extends AbstractModel {
    * when it arrives).
    */
   handleAppData() {
-    this.showLogo(this.loadDataFile('title'));
     // the rows are in the original's font, built from the title's data when they arrive (`MainApp.setData`)
     if (this.menuEntity) { this.menuEntity.refreshMenu(); }
-    if (this.sampleAsked || !this.app.audioManager) { return; }
-    this.sampleAsked = this.app.audioManager.askSamples(this.loadDataFile('music'));
+    // while appData is on its way, its arrival calls this again
+    if (this.app.appDataPending()) { return; }
+    // from localStorage at once, or from the server when they are missing there (R-062)
+    this.loadDataFiles(['title', 'music'], (files) => {
+      if (this.app.model !== this || !files) { return; }
+      this.showLogo(files.title);
+      if (this.sampleAsked || !this.app.audioManager) { return; }
+      this.sampleAsked = this.app.audioManager.askSamples(files.music);
+    });
   } // handleAppData
 
   /**

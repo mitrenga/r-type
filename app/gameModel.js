@@ -110,14 +110,19 @@ export class GameModel extends AbstractModel {
    * the data arrive after the model opened.
    */
   handleAppData() {
-    if (this.loader) { return; }
+    // while appData is on its way, its arrival calls this again
+    if (this.loader || this.app.appDataPending()) { return; }
     var names = ['levels', 'charsets', 'texts', 'global', 'sprites', 'ship', 'enemies', 'music'];
-    for (var i = 0; i < names.length; i++) {
-      this.files[names[i]] = this.loadDataFile(names[i]);
-      if (!this.files[names[i]]) { return; }
-    }
-    this.loader = new LevelLoader(this.files);
-    this.startPlaying();
+    // from localStorage at once, or from the server when they are missing there (R-062)
+    this.loadDataFiles(names, (files) => {
+      if (this.app.model !== this || this.loader || !files) { return; }
+      for (var i = 0; i < names.length; i++) {
+        this.files[names[i]] = files[names[i]];
+        if (!this.files[names[i]]) { return; }
+      }
+      this.loader = new LevelLoader(this.files);
+      this.startPlaying();
+    });
   } // handleAppData
 
   /**

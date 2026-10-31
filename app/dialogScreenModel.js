@@ -60,7 +60,7 @@ export class DialogScreenModel extends AbstractModel {
     var content = DialogScreenModel.CONTENT;
     var headingY = 8;
     if (this.logo) {
-      this.showLogo(this.loadDataFile('title'));
+      this.handleAppData();
       content = (this.title === false) ? DialogScreenModel.CONTENT_UNDER_LOGO : DialogScreenModel.CONTENT_UNDER_LOGO_HEADING;
       headingY = TitleLogo.HEIGHT+8;   // a row under the logo, the contents under the heading from +16
     }
@@ -88,7 +88,12 @@ export class DialogScreenModel extends AbstractModel {
 
   /** The data arrived after the screen was built (`MainApp.setData`). */
   handleAppData() {
-    this.showLogo(this.loadDataFile('title'));
+    // while appData is on its way, its arrival calls this again
+    if (!this.logo || this.app.appDataPending()) { return; }
+    // from localStorage at once, or from the server when it is missing there (R-062)
+    this.loadDataFiles(['title'], (files) => {
+      if (this.app.model === this && files) { this.showLogo(files.title); }
+    });
   } // handleAppData
 
   /**
