@@ -6,6 +6,7 @@ const { TextEntity } = await import('./svision/js/platform/canvas2D/textEntity.j
 const { TitleLogo } = await import('./titleLogo.js?ver='+window.srcVersion);
 const { WaitForAudioEventEntity } = await import('./svision/js/platform/canvas2D/dialogs/waitForAudioEventEntity.js?ver='+window.srcVersion);
 const { BorderEntity } = await import('./borderEntity.js?ver='+window.srcVersion);
+const { VolumeControl } = await import('./svision/js/platform/canvas2D/dialogs/volumeControl.js?ver='+window.srcVersion);
 // begin code
 
 /**
@@ -185,11 +186,13 @@ export class MenuModel extends AbstractModel {
   } // shutdown
 
   /**
+   * The level as the volume dialog words it (VolumeControl.levelText): OFF,
+   * 10%..90%, MAX.
    * @param {number} volume - A slider's 0-10.
-   * @returns {string} OFF, MAX or the percentage.
+   * @returns {string}
    */
   volumeText(volume) {
-    return volume === 0 ? 'OFF' : volume === 10 ? 'MAX' : (volume*10)+'%';
+    return VolumeControl.levelText(volume);
   } // volumeText
 
   /**
