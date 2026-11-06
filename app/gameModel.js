@@ -28,7 +28,10 @@ const { PauseGameEntity } = await import('./pauseGameEntity.js?ver='+window.srcV
  * developer build, 1 otherwise; `?devImmortal=1` keeps the ship alive there. ★ Opened with `{continue: true}` from that
  * screen (CONTINUE, `ZADANI.md` §10.7) the model does not found a new
  * world: the worker still holds the game at its rewind screen and goes on
- * from the checkpoint with the score zeroed (`continue` message).
+ * from the checkpoint with the score zeroed (`continue` message). Such a
+ * game — and one started past level 1 (`?devLevel=`) — is **not standard**
+ * (`continued`): the end-of-game screen does not write it into the hall of
+ * fame (Jet Set Willy's rule for continued games).
  *
  * ★ Nothing is drawn: the sets, the blocks, the colours and the panel come
  * from the tape (`tools/dump*.py`); the recorded frame of M1
@@ -79,6 +82,8 @@ export class GameModel extends AbstractModel {
     /** the last frame's numbers, for the end of the game */
     this.last = {score: 0, level: this.level, frame: 0};
     this.over = false;
+    /** ★ not a standard game — continued, or started past level 1: the hall of fame does not record it (JSW's rule) */
+    this.continued = !!this.options.continue || this.level !== 1;
   } // constructor
 
   /** the dead zone of the touch stick, in picture pixels */
@@ -169,6 +174,8 @@ export class GameModel extends AbstractModel {
   handleWorkerMessage(event) {
     var data = event.data || {};
     if (data.message === 'continueFailed') {
+      // a new game founded instead: standard again when it starts at level 1
+      this.continued = this.level !== 1;
       this.sendWorkerMessage({message: 'stop'});
       this.playing = false;
       this.startPlaying();
@@ -188,7 +195,7 @@ export class GameModel extends AbstractModel {
       if (data.over && !this.over) {
         this.over = true;
         this.playing = false;
-        this.app.setModel('GameOverModel', {score: data.score, level: data.level, frames: data.frame, ended: data.state, canContinue: !!data.canContinue});
+        this.app.setModel('GameOverModel', {score: data.score, level: data.level, frames: data.frame, ended: data.state, canContinue: !!data.canContinue, continued: this.continued});
       }
     }
   } // handleWorkerMessage
@@ -431,7 +438,7 @@ export class GameModel extends AbstractModel {
       this.playing = false;
     }
     // what the end-of-game screen shows when the game was left early (R-049)
-    this.app.lastGame = {score: this.last.score, level: this.last.level, frames: this.last.frame, ended: 'exit'};
+    this.app.lastGame = {score: this.last.score, level: this.last.level, frames: this.last.frame, ended: 'exit', continued: this.continued};
     super.shutdown();
   } // shutdown
 

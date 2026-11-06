@@ -1,5 +1,6 @@
 const { AbstractEntity } = await import('./svision/js/abstractEntity.js?ver='+window.srcVersion);
 const { TextEntity } = await import('./svision/js/platform/canvas2D/textEntity.js?ver='+window.srcVersion);
+const { SlidingTextEntity } = await import('./svision/js/platform/canvas2D/slidingTextEntity.js?ver='+window.srcVersion);
 const { ButtonEntity } = await import('./svision/js/platform/canvas2D/buttonEntity.js?ver='+window.srcVersion);
 const { C64Color } = await import('./svision/js/platform/canvas2D/c64/c64Color.js?ver='+window.srcVersion);
 const { DialogScreenModel } = await import('./dialogScreenModel.js?ver='+window.srcVersion);
@@ -21,11 +22,13 @@ const { DialogScreenModel } = await import('./dialogScreenModel.js?ver='+window.
  * `db/hallOfFame.php`, one row per name as Manic Miner's: the best score
  * and the level of that game.
  *
- * Opened with `{score, level, frames, ended, canContinue}` after a game — the
- * score goes to the database at once under the PLAYER NAME of the menu (the
- * game cannot start without one, `MenuModel.startGame`), so nothing is typed
- * here; a zero score is not saved — or with `{table: true}` from the menu to
- * look at the table.
+ * Opened with `{score, level, frames, ended, canContinue, continued}` after a
+ * game — the score goes to the database at once under the PLAYER NAME of the
+ * menu (the game cannot start without one, `MenuModel.startGame`), so nothing
+ * is typed here; a zero score is not saved, and neither is a game that is not
+ * standard (`continued`: continued after a GAME OVER, or started past level
+ * 1 — Jet Set Willy's rule, a note under the table says so) — or with
+ * `{table: true}` from the menu to look at the table.
  *
  * ★ **CONTINUE** (`ZADANI.md` §10.7, the remake's — the original has no
  * credits): after a GAME OVER past the start of level 1 (`canContinue`, the
@@ -61,6 +64,8 @@ export class GameOverModel extends DialogScreenModel {
  * ★ With `canContinue` a CONTINUE button on the left takes Enter and the
  * gamepad's OK from CLOSE while its ten seconds run (the count in the
  * button, Manic Miner's shape); at zero it goes and CLOSE has them back.
+ * Where CONTINUE is not, the row of the buttons carries a sliding note that
+ * continued games are not recorded (Jet Set Willy's).
  * The game's own SCORE and LEVEL line is shown only when the table does not
  * carry the game — it did not make the ten, or the name's best is older. Without the
  * database (offline) the table says so, as Manic Miner's. Closes with
@@ -77,6 +82,8 @@ export class HallOfFameEntity extends AbstractEntity {
   /** the keys of CLOSE: without CONTINUE, and beside it */
   static get CLOSE_KEYS() { return ['Enter', 'Escape', ' ', 'GamepadOK', 'GamepadExit']; }
   static get CLOSE_KEYS_BESIDE() { return ['Escape', ' ', 'GamepadExit']; }
+  /** the note left of CLOSE (Jet Set Willy's wording) */
+  static get NOTE() { return 'Only results from standard games started in level 1 are recorded. Continued games are not included.'; }
 
   /**
    * @param {AbstractEntity} parentEntity - The desktop.
@@ -84,7 +91,7 @@ export class HallOfFameEntity extends AbstractEntity {
    * @param {number} y
    * @param {number} width
    * @param {number} height
-   * @param {Object} options - `{score, level, ended}` of the game, or `{table: true}` for the table alone.
+   * @param {Object} options - `{score, level, ended, canContinue, continued}` of the game, or `{table: true}` for the table alone.
    * @param {string} playerName - PLAYER NAME of the menu, in its own case.
    */
   constructor(parentEntity, x, y, width, height, options, playerName) {
@@ -102,6 +109,8 @@ export class HallOfFameEntity extends AbstractEntity {
     this.continueEntity = null;
     this.countEntity = null;
     this.continueSince = false;
+    /** the sliding note that continued games are not recorded; null while CONTINUE holds its place */
+    this.noteEntity = null;
   } // constructor
 
   init() {
@@ -120,11 +129,13 @@ export class HallOfFameEntity extends AbstractEntity {
       this.addEntity(this.continueEntity);
       this.countEntity = new TextEntity(this.continueEntity, this.app.fonts.fonts5x5, 112-20, 4, 16, 5, HallOfFameEntity.CONTINUE_SECONDS.toString(), C64Color.color(0), false, {align: 'right'});
       this.continueEntity.addEntity(this.countEntity);
+    } else {
+      this.showNote();
     }
     if (!navigator.onLine) {
       this.showOfflineNotice();
-    } else if (o.score && !o.table) {
-      // the game first, the table when the game is in it (`setData`)
+    } else if (o.score && !o.table && !o.continued) {
+      // the game first, the table when the game is in it (`setData`); a continued game is not recorded
       this.fetchData('saveGame.db', false, {name: this.name || 'R-9', score: o.score, level: o.level || 1});
     } else {
       this.fetchData('hallOfFame.db', false, {});
@@ -168,7 +179,7 @@ export class HallOfFameEntity extends AbstractEntity {
    */
   isMine(row) {
     var o = this.options;
-    return !o.table && o.score && row.name === this.name && row.score === o.score;
+    return !o.table && !o.continued && o.score && row.name === this.name && row.score === o.score;
   } // isMine
 
   /**
@@ -210,6 +221,18 @@ export class HallOfFameEntity extends AbstractEntity {
     this.addEntity(new TextEntity(this, this.font, this.tableX+4*8, 0, line.length*8, 8, line, C64Color.color(7), false, {}));
   } // showScoreLine
 
+  /**
+   * The note left of CLOSE, where CONTINUE stands while it is offered: red,
+   * in the font of the table, sliding to the left (Jet Set Willy's).
+   */
+  showNote() {
+    if (this.noteEntity) { return; }
+    var pad = ' '.repeat(21);
+    this.noteEntity = new SlidingTextEntity(this, this.font, 24-this.x, 176+3-this.y, 168, 8, pad+HallOfFameEntity.NOTE+pad,
+      C64Color.color(10), false, {animation: 'loopLeft'});
+    this.addEntity(this.noteEntity);
+  } // showNote
+
   showOfflineNotice() {
     if (!this.options.table) { this.showScoreLine(); }
     this.addEntity(new TextEntity(this, this.font, 0, this.top+24, this.width, 8, 'SYSTEM OFFLINE', C64Color.color(2), false, {align: 'center'}));
@@ -222,6 +245,7 @@ export class HallOfFameEntity extends AbstractEntity {
    */
   loopEntity(timestamp) {
     super.loopEntity(timestamp);
+    if (this.noteEntity) { this.noteEntity.loopEntity(timestamp); }
     if (!this.continueEntity) { return; }
     if (this.continueSince === false) { this.continueSince = timestamp; }
     var left = HallOfFameEntity.CONTINUE_SECONDS-Math.floor((timestamp-this.continueSince)/1000);
@@ -232,13 +256,14 @@ export class HallOfFameEntity extends AbstractEntity {
     this.withdrawContinue();
   } // loopEntity
 
-  /** CONTINUE gone, CLOSE with all its keys. */
+  /** CONTINUE gone, CLOSE with all its keys, the note in its place. */
   withdrawContinue() {
     if (!this.continueEntity) { return; }
     this.continueEntity.destroy();
     this.continueEntity = null;
     this.countEntity = null;
     this.closeEntity.hotKeys = HallOfFameEntity.CLOSE_KEYS;
+    this.showNote();
   } // withdrawContinue
 
   handleEvent(event) {
