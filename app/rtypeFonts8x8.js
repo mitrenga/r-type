@@ -52,8 +52,8 @@ export class RTypeFonts8x8 extends ZXFonts8x8 {
   constructor(app, proportional) {
     super(app, proportional);
     this.id = 'RTypeFonts8x8';
-    /** the characters the sets give glyphs for: ZXFonts8x8's table, before EXTRA is appended */
-    this.baseChars = this.fontsChars;
+    /** the characters the sets give glyphs for: ZXFonts8x8's base table, without its extra glyphs and before EXTRA is appended */
+    this.baseChars = this.fontsChars.substring(0, this.baseCharsCount);
     /** the 2 KB set: the ROM's uppercase set with the title's glyphs over it */
     this.bytes = null;
     /** whether the title's glyphs are in (false: the ROM alone, the data not here yet) */

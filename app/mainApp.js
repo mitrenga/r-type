@@ -104,11 +104,6 @@ export class MainApp extends AbstractApp {
     this.fonts.fonts5x5 = new Fonts5x5(this);
     /** the library's tiny font, the labels of the on-screen keyboard's wide keys (PlayerNameModel) */
     this.fonts.fonts3x3 = new Fonts3x3(this);
-    // the developer banner is `◢◤ ◢◤ … DEVELOPER MODE … ◢◤ ◢◤`; the core font is ASCII only
-    this.fonts.fonts5x5.addGlyphs({
-      '◢': {width: 4, data: [[4,0,1,1], [3,1,2,1], [2,2,3,1], [1,3,4,1], [0,4,5,1]]},
-      '◤': {width: 4, data: [[0,0,5,1], [0,1,4,1], [0,2,3,1], [0,3,2,1], [0,4,1,1]]}
-    });
 
     /**
      * The controls SETTINGS offers (SettingsEntity, the shape of Boulder
